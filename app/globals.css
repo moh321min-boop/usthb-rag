@@ -7,6 +7,8 @@
 @theme inline {
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
+  --color-deep-blue: var(--deep-blue);
+  --color-link: var(--link);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
@@ -45,41 +47,79 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root,
-.dark {
+:root {
   color-scheme: light;
-  --background: #F4F7FB;
-  --foreground: #243247;
+  --background: #F5F9FD;
+  --foreground: #1B2E40;
   --card: #FFFFFF;
-  --card-foreground: #243247;
+  --card-foreground: #1B2E40;
   --popover: #FFFFFF;
-  --popover-foreground: #243247;
-  --primary: #1565C0;
-  --primary-foreground: #FFFFFF;
-  --secondary: #EAF2FF;
+  --popover-foreground: #1B2E40;
+  --primary: #A8DCFF;
+  --primary-foreground: #0B2D5C;
+  --secondary: #E8F4FE;
   --secondary-foreground: #0B2D5C;
-  --muted: #EAF2FF;
-  --muted-foreground: #243247;
-  --accent: #1565C0;
-  --accent-foreground: #F4F7FB;
-  --destructive: #1565C0;
-  --border: #C9D7E8;
-  --input: #C9D7E8;
-  --ring: #1565C0;
+  --muted: #EEF4F8;
+  --muted-foreground: #52677A;
+  --accent: #D6EEFF;
+  --accent-foreground: #0B2D5C;
+  --destructive: #B42318;
+  --border: #CFDEE9;
+  --input: #CFDEE9;
+  --ring: #3183C3;
+  --deep-blue: #0B2D5C;
+  --link: #1565C0;
   --chart-1: #0B2D5C;
-  --chart-2: #1565C0;
-  --chart-3: #243247;
-  --chart-4: #C9D7E8;
-  --chart-5: #EAF2FF;
+  --chart-2: #3183C3;
+  --chart-3: #5A9FD3;
+  --chart-4: #9DCFF4;
+  --chart-5: #D6EEFF;
   --radius: 0.75rem;
   --sidebar: #0B2D5C;
-  --sidebar-foreground: #F4F7FB;
-  --sidebar-primary: #1565C0;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #1565C0;
-  --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: #1565C0;
-  --sidebar-ring: #FFFFFF;
+  --sidebar-foreground: #F4F8FC;
+  --sidebar-primary: #A8DCFF;
+  --sidebar-primary-foreground: #0B2D5C;
+  --sidebar-accent: #183F66;
+  --sidebar-accent-foreground: #EAF4FC;
+  --sidebar-border: #234B70;
+  --sidebar-ring: #A8DCFF;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #081625;
+  --foreground: #E6F2FA;
+  --card: #10243A;
+  --card-foreground: #E6F2FA;
+  --popover: #10243A;
+  --popover-foreground: #E6F2FA;
+  --primary: #8BCFFF;
+  --primary-foreground: #082542;
+  --secondary: #142B42;
+  --secondary-foreground: #D8EDFC;
+  --muted: #132538;
+  --muted-foreground: #A9BDCD;
+  --accent: #1C3A55;
+  --accent-foreground: #E6F2FA;
+  --destructive: #FCA5A5;
+  --border: #294055;
+  --input: #334A5F;
+  --ring: #8BCFFF;
+  --deep-blue: #D8EDFC;
+  --link: #8BCFFF;
+  --chart-1: #8BCFFF;
+  --chart-2: #66B5EA;
+  --chart-3: #3C8BC4;
+  --chart-4: #235D86;
+  --chart-5: #163B59;
+  --sidebar: #06111E;
+  --sidebar-foreground: #E6F2FA;
+  --sidebar-primary: #8BCFFF;
+  --sidebar-primary-foreground: #082542;
+  --sidebar-accent: #173149;
+  --sidebar-accent-foreground: #E6F2FA;
+  --sidebar-border: #1A354D;
+  --sidebar-ring: #8BCFFF;
 }
 
 @layer base {
@@ -91,6 +131,10 @@
     color-scheme: light;
   }
 
+  html.dark {
+    color-scheme: dark;
+  }
+
   body {
     @apply bg-background text-foreground;
     min-height: 100dvh;
@@ -99,13 +143,13 @@
   }
 
   ::selection {
-    color: #F4F7FB;
-    background: #1565C0;
+    color: var(--primary-foreground);
+    background: var(--primary);
   }
 }
 
 .app-scroll {
-  scrollbar-color: #1565C0 #EAF2FF;
+  scrollbar-color: var(--link) var(--secondary);
   scrollbar-width: thin;
 }
 
@@ -116,19 +160,19 @@
 
 .app-scroll::-webkit-scrollbar-track {
   border-radius: 999px;
-  background: #EAF2FF;
+  background: var(--secondary);
 }
 
 .app-scroll::-webkit-scrollbar-thumb {
-  border: 2px solid #EAF2FF;
+  border: 2px solid var(--secondary);
   border-radius: 999px;
-  background: #1565C0;
+  background: var(--link);
 }
 
 .app-scroll::-webkit-scrollbar-thumb:hover {
-  background: #0B2D5C;
+  background: var(--deep-blue);
 }
 
 .document-dialog::backdrop {
-  background: rgb(11 45 92 / 48%);
+  background: color-mix(in srgb, var(--sidebar) 62%, transparent);
 }

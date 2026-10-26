@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Home as HomeIcon, Menu, X } from 'lucide-react'
 import { RagAuth } from './rag-auth'
 import { RagChatFeed } from './rag-chat-feed'
@@ -19,6 +19,8 @@ const subjects = [
 const initialDocuments = [
   {
     id: 'ch3-notes',
+    subjectId: 'algorithms',
+    updatedAtValue: Date.parse('2026-10-25T18:00:00+01:00'),
     name: 'Ch3_Notes.pdf',
     fileType: 'PDF',
     sizeLabel: '2.4 MB',
@@ -36,6 +38,8 @@ const initialDocuments = [
   },
   {
     id: 'algorithms-l1',
+    subjectId: 'algorithms',
+    updatedAtValue: Date.parse('2026-10-24T17:30:00+01:00'),
     name: 'Algorithms_L1.pdf',
     fileType: 'PDF',
     sizeLabel: '4.8 MB',
@@ -53,6 +57,8 @@ const initialDocuments = [
   },
   {
     id: 'td02-exercises',
+    subjectId: 'algorithms',
+    updatedAtValue: Date.parse('2026-10-22T12:00:00+01:00'),
     name: 'TD02_Exercises.pdf',
     fileType: 'PDF',
     sizeLabel: '1.1 MB',
@@ -71,9 +77,9 @@ const initialDocuments = [
 ]
 
 const initialConversations = [
-  { id: 'binary-search', title: 'Binary search complexity', updatedAt: 'اليوم · 10:42', subjectId: 'algorithms' },
-  { id: 'recursion', title: 'Recursion exercises', updatedAt: 'أمس · 18:18', subjectId: 'algorithms' },
-  { id: 'sorting', title: 'Sorting algorithms review', updatedAt: '12 مارس · 14:05', subjectId: 'algorithms' },
+  { id: 'binary-search', title: 'Binary search complexity', updatedAt: 'اليوم · 10:42', updatedAtValue: Date.parse('2026-10-26T10:42:00+01:00'), subjectId: 'algorithms' },
+  { id: 'recursion', title: 'Recursion exercises', updatedAt: 'أمس · 18:18', updatedAtValue: Date.parse('2026-10-25T18:18:00+01:00'), subjectId: 'algorithms' },
+  { id: 'sorting', title: 'Sorting algorithms review', updatedAt: '12 مارس · 14:05', updatedAtValue: Date.parse('2026-03-12T14:05:00+01:00'), subjectId: 'algorithms' },
 ]
 
 const initialMessagesByConversation = {
@@ -125,8 +131,6 @@ function formatFileSize(bytes) {
 export default function Home() {
   const [currentView, setCurrentView] = useState('home')
   const [authMode, setAuthMode] = useState('login')
-  const [activeTab, setActiveTab] = useState('subjects')
-  const [searchQuery, setSearchQuery] = useState('')
   const [input, setInput] = useState('')
   const [documents, setDocuments] = useState(initialDocuments)
   const [conversations, setConversations] = useState(initialConversations)
@@ -136,23 +140,6 @@ export default function Home() {
   const [uploadNotice, setUploadNotice] = useState('')
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
 
-  const normalizedQuery = searchQuery.trim().toLocaleLowerCase()
-  const visibleSubjects = useMemo(
-    () => subjects.filter((subject) => `${subject.nameAr} ${subject.nameEn} ${subject.code}`.toLocaleLowerCase().includes(normalizedQuery)),
-    [normalizedQuery],
-  )
-  const visibleConversations = useMemo(
-    () => conversations.filter((conversation) => {
-      const subject = subjects.find((item) => item.id === conversation.subjectId)
-      return `${conversation.title} ${subject?.nameAr ?? ''} ${subject?.nameEn ?? ''}`.toLocaleLowerCase().includes(normalizedQuery)
-    }),
-    [conversations, normalizedQuery],
-  )
-  const visibleDocuments = useMemo(
-    () => documents.filter((document) => `${document.name} ${document.fileType} ${document.description ?? ''}`.toLocaleLowerCase().includes(normalizedQuery)),
-    [documents, normalizedQuery],
-  )
-
   const activeConversation = conversations.find((conversation) => conversation.id === activeConversationId) ?? conversations[0]
   const activeSubject = subjects.find((subject) => subject.id === activeConversation?.subjectId) ?? subjects[0]
   const activeMessages = messagesByConversation[activeConversation?.id] ?? []
@@ -160,12 +147,6 @@ export default function Home() {
   function handleViewNavigation(view, mode = 'login') {
     if (view === 'auth') setAuthMode(mode)
     setCurrentView(view)
-  }
-
-  function handleTabChange(tab) {
-    setActiveTab(tab)
-    setSearchQuery('')
-    setIsMobileSidebarOpen(false)
   }
 
   function handleSelectSubject(subjectId) {
@@ -188,15 +169,11 @@ export default function Home() {
       setActiveConversationId(id)
     }
 
-    setActiveTab('subjects')
-    setSearchQuery('')
     setIsMobileSidebarOpen(false)
   }
 
   function handleSelectConversation(conversationId) {
     setActiveConversationId(conversationId)
-    setActiveTab('history')
-    setSearchQuery('')
     setIsMobileSidebarOpen(false)
   }
 
@@ -226,6 +203,7 @@ export default function Home() {
             ...conversation,
             title: conversation.title.startsWith('محادثة جديدة') ? text.slice(0, 42) : conversation.title,
             updatedAt: 'الآن',
+            updatedAtValue: Date.now(),
           }
         : conversation
     )))
@@ -253,6 +231,8 @@ export default function Home() {
 
       accepted.push({
         id: createId(`upload-${index}`),
+        subjectId: activeSubject?.id ?? subjects[0].id,
+        updatedAtValue: Date.now(),
         name: file.name,
         fileType: extension.toUpperCase(),
         sizeLabel: formatFileSize(file.size),
@@ -265,7 +245,6 @@ export default function Home() {
 
     if (accepted.length > 0) {
       setDocuments((current) => [...accepted, ...current])
-      setSearchQuery('')
     }
 
     const acceptedMessage = accepted.length > 0
@@ -321,13 +300,9 @@ export default function Home() {
   return (
     <main dir="ltr" className="flex h-dvh min-h-dvh overflow-hidden bg-[#F4F7FB] text-[#243247]">
       <RagSidebar
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-        searchQuery={searchQuery}
-        onSearchQueryChange={setSearchQuery}
-        subjects={visibleSubjects}
-        conversations={visibleConversations}
-        documents={visibleDocuments}
+        subjects={subjects}
+        conversations={conversations}
+        documents={documents}
         activeSubjectId={activeSubject?.id}
         activeConversationId={activeConversation?.id}
         onSelectSubject={handleSelectSubject}
@@ -414,7 +389,6 @@ export default function Home() {
               value={input}
               onChange={setInput}
               onSubmit={handleQuestionSubmit}
-              activeTab={activeTab}
               onFilesSelected={handleFilesSelected}
             />
             <p dir="rtl" className="mt-2 text-center text-[10px] text-[#243247]/55">
