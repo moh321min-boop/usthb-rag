@@ -1,8 +1,10 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Home as HomeIcon, Menu, X } from 'lucide-react'
+import { RagAuth } from './rag-auth'
 import { RagChatFeed } from './rag-chat-feed'
+import { RagLanding } from './rag-home'
 import { RagComposer } from './rag-composer'
 import { RagDocumentDialog } from './rag-document-dialog'
 import { RagSidebar } from './rag-sidebar'
@@ -121,6 +123,8 @@ function formatFileSize(bytes) {
 }
 
 export default function Home() {
+  const [currentView, setCurrentView] = useState('home')
+  const [authMode, setAuthMode] = useState('login')
   const [activeTab, setActiveTab] = useState('subjects')
   const [searchQuery, setSearchQuery] = useState('')
   const [input, setInput] = useState('')
@@ -152,6 +156,11 @@ export default function Home() {
   const activeConversation = conversations.find((conversation) => conversation.id === activeConversationId) ?? conversations[0]
   const activeSubject = subjects.find((subject) => subject.id === activeConversation?.subjectId) ?? subjects[0]
   const activeMessages = messagesByConversation[activeConversation?.id] ?? []
+
+  function handleViewNavigation(view, mode = 'login') {
+    if (view === 'auth') setAuthMode(mode)
+    setCurrentView(view)
+  }
 
   function handleTabChange(tab) {
     setActiveTab(tab)
@@ -295,6 +304,20 @@ export default function Home() {
     setSelectedDocument(document)
   }
 
+  if (currentView === 'home') {
+    return <RagLanding onNavigate={handleViewNavigation} />
+  }
+
+  if (currentView === 'auth') {
+    return (
+      <RagAuth
+        initialMode={authMode}
+        onNavigate={handleViewNavigation}
+        onOpenDemo={() => setCurrentView('chat')}
+      />
+    )
+  }
+
   return (
     <main dir="ltr" className="flex h-dvh min-h-dvh overflow-hidden bg-[#F4F7FB] text-[#243247]">
       <RagSidebar
@@ -340,6 +363,17 @@ export default function Home() {
             <span className="hidden rounded-full border border-[#C9D7E8] bg-[#EAF2FF] px-2.5 py-1 text-[10px] font-semibold text-[#0B2D5C] sm:inline-flex">
               نسخة تجريبية
             </span>
+            <button
+              type="button"
+              dir="rtl"
+              aria-label="العودة إلى الصفحة الرئيسية"
+              title="العودة إلى الصفحة الرئيسية"
+              onClick={() => setCurrentView('home')}
+              className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-xl border border-[#C9D7E8] bg-white px-2.5 text-[11px] font-semibold text-[#0B2D5C] transition hover:bg-[#EAF2FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0]"
+            >
+              <HomeIcon size={15} aria-hidden="true" />
+              <span className="hidden md:inline">الرئيسية</span>
+            </button>
             <img
               src="/profile-avatar.png"
               alt="صورة حساب تجريبي"
