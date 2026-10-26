@@ -1,5 +1,7 @@
 import './globals.css'
+import { cookies } from 'next/headers'
 import { Noto_Sans_Arabic } from 'next/font/google'
+import { RagThemeProvider } from './rag-theme-provider'
 
 const arabicFont = Noto_Sans_Arabic({
   subsets: ['arabic', 'latin'],
@@ -15,14 +17,22 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#F4F7FB',
-  colorScheme: 'light',
+  themeColor: [
+    { color: '#F5F9FD', media: '(prefers-color-scheme: light)' },
+    { color: '#081625', media: '(prefers-color-scheme: dark)' },
+  ],
+  colorScheme: 'light dark',
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies()
+  const initialTheme = cookieStore.get('rag-theme')?.value === 'dark' ? 'dark' : 'light'
+
   return (
-    <html lang="ar" dir="rtl">
-      <body className={`${arabicFont.variable} min-h-dvh bg-[#F4F7FB] text-[#243247] antialiased`}>{children}</body>
+    <html lang="ar" dir="rtl" className={initialTheme === 'dark' ? 'dark' : undefined}>
+      <body className={`${arabicFont.variable} min-h-dvh bg-background text-foreground antialiased`}>
+        <RagThemeProvider initialTheme={initialTheme}>{children}</RagThemeProvider>
+      </body>
     </html>
   )
 }
