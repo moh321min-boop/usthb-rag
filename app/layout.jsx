@@ -9,6 +9,12 @@ const arabicFont = Noto_Sans_Arabic({
   variable: '--font-arabic',
 })
 
+const interFont = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+})
+
 export const metadata = {
   title: 'RAG-USTHB | مساعدك الأكاديمي الذكي',
   description: 'منصة عربية لطلاب جامعة العلوم والتكنولوجيا هواري بومدين، تساعد على البحث في المحاضرات وأرشيف الامتحانات والمناهج الرسمية.',
