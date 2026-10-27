@@ -90,7 +90,7 @@ export function RagLanding({ onNavigate }) {
 
   return (
     <main dir="rtl" className="min-h-dvh overflow-hidden bg-background text-foreground">
-      <header className="sticky top-0 z-30 border-b border-border/80 bg-card/95 backdrop-blur">
+      <header className="sticky top-0 z-50 border-b border-border/80 bg-card/95 backdrop-blur">
         <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-4 px-4 py-3 sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
           <a href="#home" className="flex min-w-0 items-center gap-3" aria-label="RAG-USTHB، الرئيسية">
             <img
@@ -109,7 +109,6 @@ export function RagLanding({ onNavigate }) {
               </span>
             </span>
           </a>
-
 
           <div className="hidden items-center justify-self-end gap-2.5 lg:flex">
             <RagThemeToggle />
@@ -143,19 +142,8 @@ export function RagLanding({ onNavigate }) {
 
         {isMobileMenuOpen && (
           <div id="landing-mobile-menu" className="border-t border-border bg-card px-4 pb-4 pt-3 sm:px-6 lg:hidden">
-            <nav aria-label="التنقل الرئيسي" className="flex flex-col gap-1">
-              {navigationLinks.map(({ href, label }) => (
-                <a
-                  key={href}
-                  href={href}
-                  onClick={closeMobileMenu}
-                  className="rounded-xl px-3 py-3 text-sm font-semibold text-foreground transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
-                >
-                  {label}
-                </a>
-              ))}
-            </nav>
-            <div className="mt-3 flex items-center justify-between rounded-xl border border-border bg-background px-3 py-2">
+            {/* تم حذف روابط التنقل (navigationLinks) من هنا */}
+            <div className="flex items-center justify-between rounded-xl border border-border bg-background px-3 py-2">
               <span className="text-xs font-semibold text-foreground">المظهر</span>
               <RagThemeToggle />
             </div>
