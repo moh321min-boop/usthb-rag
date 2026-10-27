@@ -91,81 +91,84 @@ export function RagLanding({ onNavigate }) {
   return (
     <main dir="rtl" className="min-h-dvh overflow-hidden bg-background text-foreground">
       <header className="sticky top-0 z-50 border-b border-border/80 bg-card/95 backdrop-blur">
-        <div className="mx-auto grid max-w-7xl grid-cols-[1fr_auto] items-center gap-x-4 px-4 py-3 sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
-          <a href="#home" className="flex min-w-0 items-center gap-3" aria-label="RAG-USTHB، الرئيسية">
-            <img
-              src="/usthb-logo.png"
-              alt="شعار جامعة العلوم والتكنولوجيا هواري بومدين"
-              width="100"
-              height="99"
-              className="size-11 shrink-0 object-contain sm:size-12"
-            />
-            <span className="min-w-0">
-              <span dir="ltr" className="block text-left text-[15px] font-extrabold tracking-tight text-deep-blue sm:text-base">
-                RAG-USTHB
-              </span>
-              <span className="mt-0.5 block truncate text-[10px] font-medium text-muted-foreground/65 sm:text-[11px]">
-                مساعدك الأكاديمي الذكي
-              </span>
-            </span>
-          </a>
+  <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+    {/* الجهة اليمنى: الشعار وعنوان المنصة */}
+    <a href="#home" className="flex min-w-0 items-center gap-3" aria-label="RAG-USTHB، الرئيسية">
+      <img
+        src="/usthb-logo.png"
+        alt="شعار جامعة العلوم والتكنولوجيا هواري بومدين"
+        width="100"
+        height="99"
+        className="size-11 shrink-0 object-contain sm:size-12"
+      />
+      <span className="min-w-0">
+        <span dir="ltr" className="block text-left text-[15px] font-extrabold tracking-tight text-deep-blue sm:text-base">
+          RAG-USTHB
+        </span>
+        <span className="mt-0.5 block truncate text-[10px] font-medium text-muted-foreground/65 sm:text-[11px]">
+          مساعدك الأكاديمي الذكي
+        </span>
+      </span>
+    </a>
 
-          <div className="hidden items-center justify-self-end gap-2.5 lg:flex">
-            <RagThemeToggle />
-            <button
-              type="button"
-              onClick={() => openAuth('login')}
-              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-link/35 bg-card px-4 text-sm font-bold text-deep-blue transition hover:border-link hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            >
-              تسجيل الدخول
-            </button>
-            <button
-              type="button"
-              onClick={() => openAuth('register')}
-              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-            >
-              إنشاء حساب
-            </button>
-          </div>
+    {/* الجهة اليسرى: الأزرار وموقع المظهر (تظهر في الشاشات الكبيرة) */}
+    <div className="hidden items-center gap-2.5 lg:flex">
+      <RagThemeToggle />
+      <button
+        type="button"
+        onClick={() => openAuth('login')}
+        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-link/35 bg-card px-4 text-sm font-bold text-deep-blue transition hover:border-link hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        تسجيل الدخول
+      </button>
+      <button
+        type="button"
+        onClick={() => openAuth('register')}
+        className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      >
+        إنشاء حساب
+      </button>
+    </div>
 
-          <button
-            type="button"
-            aria-label={isMobileMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="landing-mobile-menu"
-            onClick={() => setIsMobileMenuOpen((open) => !open)}
-            className="flex size-10 items-center justify-center justify-self-end rounded-xl border border-border bg-card text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:hidden"
-          >
-            {isMobileMenuOpen ? <X size={19} aria-hidden="true" /> : <Menu size={19} aria-hidden="true" />}
-          </button>
-        </div>
+    {/* زر القائمة المنسدلة للموبايل */}
+    <button
+      type="button"
+      aria-label={isMobileMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
+      aria-expanded={isMobileMenuOpen}
+      aria-controls="landing-mobile-menu"
+      onClick={() => setIsMobileMenuOpen((open) => !open)}
+      className="flex size-10 items-center justify-center rounded-xl border border-border bg-card text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:hidden"
+    >
+      {isMobileMenuOpen ? <X size={19} aria-hidden="true" /> : <Menu size={19} aria-hidden="true" />}
+    </button>
+  </div>
 
-        {isMobileMenuOpen && (
-          <div id="landing-mobile-menu" className="border-t border-border bg-card px-4 pb-4 pt-3 sm:px-6 lg:hidden">
-            {/* تم حذف روابط التنقل (navigationLinks) من هنا */}
-            <div className="flex items-center justify-between rounded-xl border border-border bg-background px-3 py-2">
-              <span className="text-xs font-semibold text-foreground">المظهر</span>
-              <RagThemeToggle />
-            </div>
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => openAuth('login')}
-                className="min-h-11 rounded-xl border border-link/40 px-3 text-sm font-bold text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
-              >
-                تسجيل الدخول
-              </button>
-              <button
-                type="button"
-                onClick={() => openAuth('register')}
-                className="min-h-11 rounded-xl bg-primary px-3 text-sm font-bold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
-              >
-                إنشاء حساب
-              </button>
-            </div>
-          </div>
-        )}
-      </header>
+  {/* القائمة المنسدلة للشاشات الصغيرة */}
+  {isMobileMenuOpen && (
+    <div id="landing-mobile-menu" className="border-t border-border bg-card px-4 pb-4 pt-3 sm:px-6 lg:hidden">
+      <div className="flex items-center justify-between rounded-xl border border-border bg-background px-3 py-2">
+        <span className="text-xs font-semibold text-foreground">المظهر</span>
+        <RagThemeToggle />
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <button
+          type="button"
+          onClick={() => openAuth('login')}
+          className="min-h-11 rounded-xl border border-link/40 px-3 text-sm font-bold text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+        >
+          تسجيل الدخول
+        </button>
+        <button
+          type="button"
+          onClick={() => openAuth('register')}
+          className="min-h-11 rounded-xl bg-primary px-3 text-sm font-bold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+        >
+          إنشاء حساب
+        </button>
+      </div>
+    </div>
+  )}
+</header>
 
       <section id="home" className="relative isolate scroll-mt-24 overflow-hidden">
         <div aria-hidden="true" className="pointer-events-none absolute -left-32 -top-28 size-[420px] rounded-full bg-link/10 blur-[90px]" />
