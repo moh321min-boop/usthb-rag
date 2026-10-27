@@ -1,6 +1,6 @@
 import './globals.css'
 import { cookies } from 'next/headers'
-import { Noto_Sans_Arabic } from 'next/font/google'
+import { Inter, Noto_Sans_Arabic } from 'next/font/google'
 import { RagThemeProvider } from './rag-theme-provider'
 
 const arabicFont = Noto_Sans_Arabic({
