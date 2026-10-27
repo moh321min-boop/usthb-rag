@@ -16,8 +16,8 @@ const interFont = Inter({
 })
 
 export const metadata = {
-  title: 'RAG-USTHB | مساعدك الأكاديمي الذكي',
-  description: 'منصة عربية لطلاب جامعة العلوم والتكنولوجيا هواري بومدين، تساعد على البحث في المحاضرات وأرشيف الامتحانات والمناهج الرسمية.',
+title: 'RAG-USTHB | Smart Academic AI Assistant',
+  description: 'An AI-powered academic platform for USTHB students to search lectures, exam archives, and official syllabi with multi-language support.',
 }
 
 export const viewport = {
@@ -34,9 +34,12 @@ export default async function RootLayout({ children }) {
   const cookieStore = await cookies()
   const initialTheme = cookieStore.get('rag-theme')?.value === 'dark' ? 'dark' : 'light'
 
+  const currentLang = cookieStore.get('rag-lang')?.value || 'en'
+  const isRtl = currentLang === 'ar'
+  
   return (
-    <html lang="ar" dir="rtl" className={initialTheme === 'dark' ? 'dark' : undefined}>
-      <body className={`${arabicFont.variable} min-h-dvh bg-background text-foreground antialiased`}>
+  <html lang={currentLang} dir={isRtl ? 'rtl' : 'ltr'} className={initialTheme === 'dark' ? 'dark' : undefined}>
+      <body className={`${interFont.variable} ${arabicFont.variable} min-h-dvh bg-background text-foreground antialiased font-sans`}>
         <RagThemeProvider initialTheme={initialTheme}>{children}</RagThemeProvider>
       </body>
     </html>
