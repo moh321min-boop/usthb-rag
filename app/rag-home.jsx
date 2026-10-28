@@ -209,6 +209,7 @@ export function RagLanding({ onNavigate }) {
         </a>
       </div>
     </div>
+    </div>
 
             <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-xs font-semibold text-muted-foreground/70">
               {universityDocuments.map((document) => (
