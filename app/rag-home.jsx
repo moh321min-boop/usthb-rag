@@ -164,7 +164,9 @@ export function RagLanding({ onNavigate }) {
   )}
 </header>
 
-      <div className="inline-flex items-center gap-2 rounded-full border border-link/15 bg-card px-3.5 py-2 text-xs font-bold text-deep-blue shadow-sm">
+        <section id="home" className="relative isolate scroll-mt-24 overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute -left-32 -top-28 size-[420px] rounded-full bg-link/10 blur-[90px]" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-40 bottom-0 size-[380px] rounded-full bg-sidebar/[0.06] blur-[90px]" />      <div className="inline-flex items-center gap-2 rounded-full border border-link/15 bg-card px-3.5 py-2 text-xs font-bold text-deep-blue shadow-sm">
               <span className="flex size-6 items-center justify-center rounded-full bg-secondary text-link">
                 <Sparkles size={14} aria-hidden="true" />
               </span>
