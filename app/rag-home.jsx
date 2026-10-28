@@ -34,7 +34,7 @@ const translations = {
       badge: 'USTHB Student Knowledge Platform',
       title1: 'Your AI-Powered Academic Assistant at',
       titleHighlight: 'USTHB',
-      description: 'Search lectures, exam archives, and official curricula through an advanced RAG experience, delivering precise answers backed by trusted sources.',
+      description: 'Search lectures, exam archives, and official curricula through an advanced RAG experience, delivering precise academic answers.',
       getStarted: 'Get Started Now',
       explore: 'Explore Features',
       documents: ['Official Lectures', 'Exam Archives', 'Official Curricula'],
@@ -48,38 +48,38 @@ const translations = {
     },
     features: {
       tag: 'Why RAG-USTHB?',
-      title: 'Smarter Study & Easier Access to Curricula',
-      description: 'Interactive tools designed specifically to help Computer Science students organize their review journey and achieve the best results.',
+      title: 'Smarter Review & Easier Access to Curricula',
+      description: 'Interactive tools designed specifically to help Computer Science students organize their study journey and achieve top results.',
       cards: [
         {
           number: '01',
-          title: 'Comprehensive Curriculum Coverage',
-          description: 'Computer Science courses and lectures at USTHB, from algorithms and data structures to databases and networks.',
+          title: 'Official Curriculum Coverage',
+          description: 'Computer Science courses and lectures at USTHB, from algorithms to databases and networks.',
           detail: 'Computer Science Dept',
         },
         {
           number: '02',
           title: 'Direct & Smart Chat',
-          description: 'Ask and inquire freely about your lessons and study topics, and get clear, accurate explanations tailored for students.',
+          description: 'Ask freely about your lessons and study topics, and get clear, accurate explanations tailored for students.',
           detail: 'Fast Academic Interaction',
         },
         {
           number: '03',
-          title: 'Lectures & Exams Archive',
-          description: 'Instant and easy access to lecture content and past exam papers for a comprehensive and effective review before exams.',
-          detail: 'Verified & Reliable Sources',
+          title: 'Lectures & Exam Archives',
+          description: 'Instant and easy access to lecture content and past exam topics for effective test preparation.',
+          detail: 'Verified Academic Content',
         },
       ],
     },
     about: {
       badge: 'About Platform',
       title: 'Integrated Knowledge Platform for USTHB Students',
-      description: 'RAG-USTHB combines the power of artificial intelligence with official course content, ensuring a clear and distraction-free study experience.',
+      description: 'RAG-USTHB combines AI with official course content, ensuring a clear and distraction-free study experience.',
       cta: 'Explore Platform Now',
       steps: [
         { step: '01', title: 'Select Subject', text: 'Choose your study courses.' },
         { step: '02', title: 'Ask Your Question', text: 'Inquire in English or Arabic.' },
-        { step: '03', title: 'Get the Answer', text: 'Review accurate and reliable answers.' },
+        { step: '03', title: 'Get the Answer', text: 'Review accurate answers.' },
       ],
     },
     links: {
@@ -125,7 +125,7 @@ const translations = {
       badge: 'منصة المعرفة لطلاب USTHB',
       title1: 'مساعدك الأكاديمي الذكي المدعوم بالذكاء الاصطناعي في',
       titleHighlight: 'USTHB',
-      description: 'ابحث في المحاضرات، أرشيف الامتحانات والمناهج الرسمية عبر تجربة متقدمة للاسترجاع المعزز بالتوليد، مع إجابات دقيقة وموثوقة.',
+      description: 'ابحث في المحاضرات، أرشيف الامتحانات والمناهج الرسمية عبر تجربة ذكية للاسترجاع المعزز بالتوليد، لإجابات دقيقة ومباشرة.',
       getStarted: 'ابدأ الآن',
       explore: 'استكشف المزايا',
       documents: ['المحاضرات الرسمية', 'أرشيف الامتحانات', 'المناهج والمقررات'],
@@ -158,7 +158,7 @@ const translations = {
           number: '03',
           title: 'أرشيف المحاضرات والامتحانات',
           description: 'وصول فوري وسهل إلى محتوى المحاضرات وامتحانات السنوات السابقة لمراجعة شاملة وفعالة قبل الامتحانات.',
-          detail: 'مراجع موثوقة ومفحوصة',
+          detail: 'محتوى أكاديمي موثوق',
         },
       ],
     },
@@ -225,7 +225,7 @@ export function RagLanding({ onNavigate }) {
 
   return (
     <main dir={isRtl ? 'rtl' : 'ltr'} className="min-h-dvh overflow-hidden bg-background text-foreground">
-      {/* Header */}
+      {/* Navbar Header */}
       <header className="sticky top-0 z-50 border-b border-border/80 bg-card/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <a href="#home" className="flex min-w-0 items-center gap-3" aria-label="RAG-USTHB, Home">
@@ -273,7 +273,7 @@ export function RagLanding({ onNavigate }) {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Toggle Button */}
           <button
             type="button"
             aria-label={isMobileMenuOpen ? t.nav.closeMenu : t.nav.mobileMenu}
@@ -286,7 +286,7 @@ export function RagLanding({ onNavigate }) {
           </button>
         </div>
 
-        {/* Mobile Dropdown */}
+        {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
           <div id="landing-mobile-menu" className="border-t border-border bg-card px-4 pb-4 pt-3 sm:px-6 lg:hidden">
             <div className="flex items-center justify-between gap-2 rounded-xl border border-border bg-background px-3 py-2">
@@ -388,7 +388,7 @@ export function RagLanding({ onNavigate }) {
                   </div>
                 </div>
                 <span className="rounded-full border border-sidebar-foreground/20 bg-sidebar-foreground/10 px-2.5 py-1 text-[10px] font-semibold text-sidebar-foreground/90">
-                  {lang === 'en' ? 'Live Preview' : 'مثال توضيحي'}
+                  {lang === 'en' ? 'Live Demo' : 'مثال توضيحي'}
                 </span>
               </div>
 
@@ -421,11 +421,11 @@ export function RagLanding({ onNavigate }) {
                   <div className="flex flex-wrap gap-2">
                     <span dir="ltr" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-2.5 py-2 text-[10px] font-semibold text-foreground">
                       <FileText size={14} className="text-link" aria-hidden="true" />
-                      Algorithms_L1.pdf
+                      Algorithms_L1
                     </span>
                     <span dir="ltr" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-2.5 py-2 text-[10px] font-semibold text-foreground">
                       <FileText size={14} className="text-link" aria-hidden="true" />
-                      DataStructures.pdf
+                      DataStructures_L2
                     </span>
                   </div>
                 </div>
@@ -450,15 +450,13 @@ export function RagLanding({ onNavigate }) {
             </p>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-12">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {t.features.cards.map(({ number, title, description, detail }, index) => {
               const Icon = featureIcons[index] || BookOpen
               return (
                 <article
                   key={number}
-                  className={`group relative flex min-h-[270px] flex-col overflow-hidden rounded-[26px] border border-border bg-card p-6 shadow-[0_8px_28px_-22px_rgba(11,45,92,0.45)] transition hover:-translate-y-1 hover:border-link/45 hover:shadow-[0_18px_42px_-24px_rgba(11,45,92,0.38)] sm:p-7 ${
-                    index === 0 ? 'lg:col-span-5' : index === 1 ? 'lg:col-span-4' : 'lg:col-span-3'
-                  }`}
+                  className="group relative flex min-h-[260px] flex-col overflow-hidden rounded-[24px] border border-border bg-card p-6 shadow-[0_8px_28px_-22px_rgba(11,45,92,0.45)] transition hover:-translate-y-1 hover:border-link/45 hover:shadow-[0_18px_42px_-24px_rgba(11,45,92,0.38)] sm:p-7"
                 >
                   <div aria-hidden="true" className="absolute -left-12 -top-12 size-36 rounded-full bg-secondary transition group-hover:bg-link/10" />
                   <div className="relative flex items-start justify-between gap-4">
@@ -508,9 +506,9 @@ export function RagLanding({ onNavigate }) {
 
           <div className="grid gap-3 sm:grid-cols-3">
             {t.about.steps.map(({ step, title, text }) => (
-              <div key={step} className="rounded-2xl border border-sidebar-foreground/15 bg-sidebar-foreground/[0.07] p-4">
+              <div key={step} className="rounded-2xl border border-sidebar-foreground/15 bg-sidebar-foreground/[0.07] p-4 text-center sm:text-start">
                 <span dir="ltr" className="text-xs font-extrabold tracking-widest text-sidebar-foreground/55">{step}</span>
-                <h3 className="mt-5 text-sm font-extrabold">{title}</h3>
+                <h3 className="mt-3 text-sm font-extrabold">{title}</h3>
                 <p className="mt-2 text-xs leading-6 text-sidebar-foreground/70">{text}</p>
               </div>
             ))}
