@@ -180,7 +180,7 @@ export function RagLanding({ onNavigate }) {
 
             <h1 className="mt-6 text-4xl font-extrabold leading-[1.35] tracking-tight text-deep-blue sm:text-5xl lg:text-[3.45rem]">
               Your AI-Powered Academic Assistant at{' '}
-              <span className="text-link">USTHB</span>
+            <span className="mt-1 block text-link">USTHB</span>
             </h1>
             <p className="mt-5 max-w-xl text-base leading-8 text-muted-foreground/75 sm:text-lg">
               Search lectures, exam archives, and official curricula through an advanced RAG experience, delivering precise answers backed by trusted sources.
