@@ -15,10 +15,7 @@ import {
   initialConversations,
   initialMessagesByConversation,
 } from './mock-data'
-
-function createId(prefix) {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
-}
+import { createId } from '@/services/utils'
 
 function formatFileSize(bytes) {
   if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`
