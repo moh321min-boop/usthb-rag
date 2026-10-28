@@ -186,7 +186,7 @@ export function RagLanding({ onNavigate }) {
               Search lectures, exam archives, and official curricula through an advanced RAG experience, delivering precise answers backed by trusted sources.
             </p>
 
-            <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+<div className="mt-8 flex w-full max-w-[300px] flex-col items-stretch gap-3">
               <button
                 type="button"
                 onClick={() => onNavigate('chat')}
