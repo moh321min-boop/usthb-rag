@@ -190,14 +190,14 @@ export function RagLanding({ onNavigate }) {
               <button
                 type="button"
                 onClick={() => onNavigate('chat')}
-            className="inline-flex min-h-14 w-full sm:w-auto items-center justify-center gap-3 rounded-2xl bg-primary px-8 text-sm font-extrabold text-primary-foreground shadow-[0_14px_30px_-14px_rgba(21,101,192,0.75)] transition hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-8 text-sm font-extrabold text-primary-foreground shadow-[0_14px_30px_-14px_rgba(21,101,192,0.75)] transition hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 Get Started Now
                 <ArrowLeft size={18} aria-hidden="true" />
               </button>
               <a
                 href="#subjects"
-              className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 rounded-2xl px-6 text-sm font-bold text-deep-blue transition hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl px-6 text-sm font-bold text-deep-blue transition hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 Explore Features
                 <ArrowLeft size={15} aria-hidden="true" />
