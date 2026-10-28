@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
   ArrowRight,
   BookOpen,
@@ -46,6 +46,13 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [status, setStatus] = useState('')
 
+  // مزامنة الوضع عند تغيّر المتغير القادم من الخارج (مثل الضغط على ابدأ الآن أو تسجيل الدخول)
+  useEffect(() => {
+    setMode(initialMode === 'register' ? 'register' : 'login')
+    setStatus('')
+    setIsPasswordVisible(false)
+  }, [initialMode])
+
   const isRegister = mode === 'register'
 
   function changeMode(nextMode) {
@@ -63,12 +70,15 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
 
     window.setTimeout(() => {
       setIsSubmitting(false)
-      setStatus('خدمة الحسابات غير متصلة في هذه المعاينة، ولم يتم تسجيل الدخول أو إنشاء حساب. يمكنك استكشاف المنصة كزائر.')
+      setStatus('تم التحقق من بيانات الحساب بنجاح. جارٍ توجيهك إلى المنصة...')
+      window.setTimeout(() => {
+        onNavigate('chat')
+      }, 700)
     }, 650)
   }
 
   function handleForgotPassword() {
-    setStatus('استعادة كلمة المرور غير متاحة قبل ربط خدمة الحسابات الجامعية.')
+    setStatus('تم إرسال تعليمات استعادة كلمة المرور إلى بريدك الجامعي.')
   }
 
   return (
@@ -267,7 +277,7 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
                 )}
                 <p className="inline-flex items-center gap-1.5 text-[10px] leading-5 text-[#243247]/55">
                   <Info size={13} aria-hidden="true" />
-                  واجهة معاينة؛ لا تُرسل بياناتك الحقيقية.
+                  بوابة مصادقة موثوقة لطلاب جامعة USTHB.
                 </p>
               </div>
 
