@@ -34,10 +34,10 @@ const translations = {
       badge: 'USTHB Student Knowledge Platform',
       title1: 'Your AI-Powered Academic Assistant at',
       titleHighlight: 'USTHB',
-      description: 'Search lectures, exam archives, and official curricula through an advanced RAG experience, delivering precise academic answers.',
+      description: 'Search lectures, exam schedules, PV deliberations, and official curricula through an advanced RAG experience, delivering precise academic answers.',
       getStarted: 'Get Started Now',
       explore: 'Explore Features',
-      documents: ['Official Lectures', 'Exam Archives', 'Official Curricula'],
+      documents: ['Official Lectures', 'Exam Archives', 'Deliberation PVs', 'Official Curricula'],
       previewTitle: 'Study Assistant',
       previewSub: 'Instant academic search',
       previewQuery: 'What is the time complexity of binary search?',
@@ -49,24 +49,24 @@ const translations = {
     features: {
       tag: 'Why RAG-USTHB?',
       title: 'Smarter Review & Easier Access to Curricula',
-      description: 'Interactive tools designed specifically to help Computer Science students organize their study journey and achieve top results.',
+      description: 'Interactive tools designed specifically to help Computer Science students at USTHB organize their study journey and achieve top results.',
       cards: [
         {
           number: '01',
           title: 'Official Curriculum Coverage',
-          description: 'Computer Science courses and lectures at USTHB, from algorithms to databases and networks.',
+          description: 'Computer Science courses, coefficients, credits, and official syllabi at USTHB from algorithms to networks and databases.',
           detail: 'Computer Science Dept',
         },
         {
           number: '02',
           title: 'Direct & Smart Chat',
-          description: 'Ask freely about your lessons and study topics, and get clear, accurate explanations tailored for students.',
+          description: 'Ask freely about your lessons, schedules, exam rooms, and study topics, with precise answers backed by course data.',
           detail: 'Fast Academic Interaction',
         },
         {
           number: '03',
-          title: 'Lectures & Exam Archives',
-          description: 'Instant and easy access to lecture content and past exam topics for effective test preparation.',
+          title: 'Exams & Deliberations Archive',
+          description: 'Instant and easy access to past exam papers, retakes schedules, and grade PV deliberations for effective test preparation.',
           detail: 'Verified Academic Content',
         },
       ],
@@ -74,12 +74,12 @@ const translations = {
     about: {
       badge: 'About Platform',
       title: 'Integrated Knowledge Platform for USTHB Students',
-      description: 'RAG-USTHB combines AI with official course content, ensuring a clear and distraction-free study experience.',
+      description: 'RAG-USTHB combines AI with official course content, timetables, and academic records to ensure a clear and distraction-free study experience.',
       cta: 'Explore Platform Now',
       steps: [
-        { step: '01', title: 'Select Subject', text: 'Choose your study courses.' },
-        { step: '02', title: 'Ask Your Question', text: 'Inquire in English or Arabic.' },
-        { step: '03', title: 'Get the Answer', text: 'Review accurate answers.' },
+        { step: '01', title: 'Select Subject', text: 'Choose your study courses and modules.' },
+        { step: '02', title: 'Ask Your Question', text: 'Inquire in English or Arabic about exams, schedules, or lessons.' },
+        { step: '03', title: 'Get the Answer', text: 'Review accurate answers backed by institutional data.' },
       ],
     },
     links: {
@@ -125,10 +125,10 @@ const translations = {
       badge: 'منصة المعرفة لطلاب USTHB',
       title1: 'مساعدك الأكاديمي الذكي المدعوم بالذكاء الاصطناعي في',
       titleHighlight: 'USTHB',
-      description: 'ابحث في المحاضرات، أرشيف الامتحانات والمناهج الرسمية عبر تجربة ذكية للاسترجاع المعزز بالتوليد، لإجابات دقيقة ومباشرة.',
+      description: 'ابحث في المحاضرات، جداول الامتحانات، محاضر المداولات (PV)، والمناهج الرسمية عبر تجربة ذكية للاسترجاع المعزز، لإجابات دقيقة وموثوقة.',
       getStarted: 'ابدأ الآن',
       explore: 'استكشف المزايا',
-      documents: ['المحاضرات الرسمية', 'أرشيف الامتحانات', 'المناهج والمقررات'],
+      documents: ['المحاضرات الرسمية', 'أرشيف الامتحانات', 'محاضر المداولات (PV)', 'المناهج والمقررات'],
       previewTitle: 'مساعد المواد الدراسية',
       previewSub: 'استفسار أكاديمي فوري',
       previewQuery: 'ما هو التعقيد الزمني لخوارزمية البحث الثنائي؟',
@@ -138,43 +138,43 @@ const translations = {
       previewRefsSub: 'قسم الإعلام الآلي',
     },
     features: {
-      tag: 'لماذا RAG-USTHB؟',
+      tag: 'Why RAG-USTHB?',
       title: 'مراجعة أذكى ومقررات أسهل للوصول',
-      description: 'أدوات تفاعلية صُممت خصيصاً لمساعدة طلاب كلية الإعلام الآلي في تنظيم رحلة المراجعة وتحصيل أفضل النتائج.',
+      description: 'أدوات تفاعلية صُممت خصيصاً لمساعدة طلاب كلية الإعلام الآلي في USTHB على تنظيم رحلة المراجعة وتحصيل أفضل النتائج.',
       cards: [
         {
           number: '01',
           title: 'تغطية شاملة للمناهج الرسمية',
-          description: 'مقررات ومحاضرات علوم الحاسوب والإعلام الآلي في USTHB، من الخوارزميات وهياكل البيانات إلى قواعد البيانات والشبكات.',
+          description: 'مقررات، أرصدة (Credits)، ومعاملات مواد علوم الحاسوب والإعلام الآلي في USTHB، من الخوارزميات إلى الشبكات وقواعد البيانات.',
           detail: 'مقررات قسم الإعلام الآلي',
         },
         {
           number: '02',
           title: 'دردشة ذكية ومباشرة',
-          description: 'اسأل واستفسر بحرية عن دروسك ومواضيعك الدراسية، واحصل على شروحات واضحة ودقيقة مصممة خصيصاً للطلاب.',
+          description: 'اسأل واستفسر بحرية عن دروسك، توقيت الامتحانات، قاعات التدريب، والمواضيع الدراسية مع إجابات مستخرجة بدقة.',
           detail: 'تفاعل أكاديمي سريع',
         },
         {
           number: '03',
-          title: 'أرشيف المحاضرات والامتحانات',
-          description: 'وصول فوري وسهل إلى محتوى المحاضرات وامتحانات السنوات السابقة لمراجعة شاملة وفعالة قبل الامتحانات.',
+          title: 'أرشيف الامتحانات والمداولات',
+          description: 'وصول فوري وسهل إلى محتوى الامتحانات السابقة، تواريخ الرتوشات، ونتائج ومحاضر المداولات (PV) لمراجعة شاملة.',
           detail: 'محتوى أكاديمي موثوق',
         },
       ],
     },
     about: {
-      badge: 'عن المنصة',
+      badge: 'About Platform',
       title: 'منصة معرفية متكاملة لطلاب USTHB',
-      description: 'يجمع RAG-USTHB بين قوة الذكاء الاصطناعي ومحتوى المقررات الرسمية، لتستمتع بتجربة دراسية واضحة وخالية من التشتت.',
+      description: 'يجمع RAG-USTHB بين قوة الذكاء الاصطناعي وبيانات المقررات، جداول التوقيت، ومحاضر المداولات لتجربة دراسية واضحة وموثوقة.',
       cta: 'استكشف المنصة الآن',
       steps: [
-        { step: '01', title: 'اختر المادة', text: 'حدد مقرراتك الدراسية.' },
-        { step: '02', title: 'اطرح سؤالك', text: 'استفسر بالعربية أو الإنجليزية.' },
-        { step: '03', title: 'احصل على الإجابة', text: 'راجع إجابات دقيقة وموثوقة.' },
+        { step: '01', title: 'اختر المادة', text: 'حدد مقرراتك الدراسية وتخصصك.' },
+        { step: '02', title: 'اطرح سؤالك', text: 'استفسر بالعربية أو الإنجليزية عن الدروس والامتحانات.' },
+        { step: '03', title: 'احصل على الإجابة', text: 'راجع إجابات دقيقة مدعومة بالبيانات الرسمية.' },
       ],
     },
     links: {
-      tag: 'روابط مختارة',
+      tag: 'Selected Links',
       title: 'موارد جامعية مفيدة',
       description: 'انتقل مباشرة إلى الموقع الرسمي، مكتبة الجامعة، أو موقع الحرم الجامعي.',
       items: [
@@ -421,140 +421,9 @@ export function RagLanding({ onNavigate }) {
                   <div className="flex flex-wrap gap-2">
                     <span dir="ltr" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-2.5 py-2 text-[10px] font-semibold text-foreground">
                       <FileText size={14} className="text-link" aria-hidden="true" />
-                      Algorithms_L1
+                      Algorithms_L1.pdf
                     </span>
                     <span dir="ltr" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-2.5 py-2 text-[10px] font-semibold text-foreground">
                       <FileText size={14} className="text-link" aria-hidden="true" />
-                      DataStructures_L2
+                      Exam_Archive.pdf
                     </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="scroll-mt-24 border-y border-border/80 bg-card/70 py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-2xl">
-              <p className="text-xs font-extrabold tracking-wide text-link">{t.features.tag}</p>
-              <h2 className="mt-2 text-2xl font-extrabold leading-9 text-deep-blue sm:text-3xl">
-                {t.features.title}
-              </h2>
-            </div>
-            <p className="max-w-md text-sm leading-7 text-muted-foreground/70">
-              {t.features.description}
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {t.features.cards.map(({ number, title, description, detail }, index) => {
-              const Icon = featureIcons[index] || BookOpen
-              return (
-                <article
-                  key={number}
-                  className="group relative flex min-h-[260px] flex-col overflow-hidden rounded-[24px] border border-border bg-card p-6 shadow-[0_8px_28px_-22px_rgba(11,45,92,0.45)] transition hover:-translate-y-1 hover:border-link/45 hover:shadow-[0_18px_42px_-24px_rgba(11,45,92,0.38)] sm:p-7"
-                >
-                  <div aria-hidden="true" className="absolute -left-12 -top-12 size-36 rounded-full bg-secondary transition group-hover:bg-link/10" />
-                  <div className="relative flex items-start justify-between gap-4">
-                    <span className="flex size-12 items-center justify-center rounded-2xl bg-secondary text-link">
-                      <Icon size={21} strokeWidth={1.8} aria-hidden="true" />
-                    </span>
-                    <span dir="ltr" className="text-xs font-extrabold tracking-[0.18em] text-link/55">
-                      {number}
-                    </span>
-                  </div>
-                  <h3 className="relative mt-6 text-lg font-extrabold leading-8 text-deep-blue">{title}</h3>
-                  <p className="relative mt-2 text-sm leading-7 text-muted-foreground/70">{description}</p>
-                  <div className="relative mt-auto flex items-center gap-2 pt-5 text-xs font-bold text-link">
-                    <CheckCircle2 size={15} aria-hidden="true" />
-                    {detail}
-                  </div>
-                </article>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="scroll-mt-24 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-8 rounded-[30px] bg-sidebar p-6 text-sidebar-foreground shadow-[0_26px_70px_-42px_rgba(11,45,92,0.75)] sm:p-9 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-12 lg:p-12">
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-sidebar-foreground/20 bg-sidebar-foreground/10 px-3 py-1.5 text-[11px] font-bold text-sidebar-foreground/90">
-              <GraduationCap size={15} aria-hidden="true" />
-              {t.about.badge}
-            </div>
-            <h2 className="mt-5 max-w-xl text-2xl font-extrabold leading-10 sm:text-3xl">
-              {t.about.title}
-            </h2>
-            <p className="mt-3 max-w-xl text-sm leading-7 text-sidebar-foreground/75">
-              {t.about.description}
-            </p>
-            <button
-              type="button"
-              onClick={() => onNavigate('chat')}
-              className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-card px-5 text-sm font-extrabold text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sidebar-ring"
-            >
-              {t.about.cta}
-              <ArrowLeft size={16} aria-hidden="true" className={isRtl ? 'rotate-180' : ''} />
-            </button>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-3">
-            {t.about.steps.map(({ step, title, text }) => (
-              <div key={step} className="rounded-2xl border border-sidebar-foreground/15 bg-sidebar-foreground/[0.07] p-4 text-center sm:text-start">
-                <span dir="ltr" className="text-xs font-extrabold tracking-widest text-sidebar-foreground/55">{step}</span>
-                <h3 className="mt-3 text-sm font-extrabold">{title}</h3>
-                <p className="mt-2 text-xs leading-6 text-sidebar-foreground/70">{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Useful Links Section */}
-      <section aria-labelledby="useful-links-heading" className="border-t border-border bg-secondary/45 px-4 py-14 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-6">
-            <p className="text-xs font-extrabold text-link">{t.links.tag}</p>
-            <h2 id="useful-links-heading" className="mt-2 text-2xl font-extrabold text-deep-blue">{t.links.title}</h2>
-            <p className="mt-2 text-sm leading-7 text-muted-foreground/70">{t.links.description}</p>
-          </div>
-          <ul className="grid gap-3 md:grid-cols-3">
-            {t.links.items.map(({ href, label, detail, Icon }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex min-h-[96px] items-center gap-3 rounded-2xl border border-border bg-card p-4 transition hover:-translate-y-0.5 hover:border-link/50 hover:bg-background focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-                >
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-link transition group-hover:bg-primary group-hover:text-primary-foreground">
-                    <Icon size={19} aria-hidden="true" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-bold text-deep-blue">{label}</span>
-                    <span className="mt-1 block text-xs text-muted-foreground/65">{detail}</span>
-                  </span>
-                  <ExternalLink size={15} className="shrink-0 text-link" aria-hidden="true" />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-border bg-card px-4 py-5 sm:px-6 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 text-center text-[11px] text-foreground/60 sm:flex-row sm:items-center sm:justify-between sm:text-right">
-          <p>{t.footer.left}</p>
-          <p>{t.footer.right}</p>
-        </div>
-      </footer>
-    </main>
-  )
-}
