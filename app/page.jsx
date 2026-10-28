@@ -56,11 +56,8 @@ export default function Home() {
     <main dir="ltr" className="flex h-dvh min-h-dvh overflow-hidden bg-[#F4F7FB] text-[#243247]">
       {/* 1. الشريط الجانبي للمحادثات والمقاييس */}
       <RagSidebar
-        subjects={subjects}
         conversations={conversations}
-        activeSubjectId={activeSubject?.id}
         activeConversationId={activeConversation?.id}
-        onSelectSubject={(id) => handleSelectSubject(id, () => setIsMobileSidebarOpen(false))}
         onSelectConversation={(id) => handleSelectConversation(id, () => setIsMobileSidebarOpen(false))}
         isMobileOpen={isMobileSidebarOpen}
         onCloseMobile={() => setIsMobileSidebarOpen(false)}
@@ -90,7 +87,7 @@ export default function Home() {
 
           <div className="flex shrink-0 items-center gap-2">
             <span className="hidden rounded-full border border-[#C9D7E8] bg-[#EAF2FF] px-2.5 py-1 text-[10px] font-semibold text-[#0B2D5C] sm:inline-flex">
-              MVP Edition
+              MVP version
             </span>
             <button
               type="button"
