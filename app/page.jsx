@@ -14,7 +14,7 @@ export default function Home() {
   const [currentView, setCurrentView] = useState('home') // 'home' | 'auth' | 'chat'
   const [authMode, setAuthMode] = useState('login')
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   // 2. استدعاء منطق وحالات الدردشة بالكامل من الـ Custom Hook
   const {
     subjects,
@@ -36,7 +36,7 @@ export default function Home() {
   // --- الشروط الخاصة بالتنقل بين الشاشات ---
 
   // الشاشة الأولى: الصفحة الرئيسية (Landing Page)
-  if (currentView === 'home') {
+if (currentView === 'home') {
     return <RagLanding onNavigate={handleViewNavigation} />
   }
 
@@ -46,15 +46,40 @@ export default function Home() {
       <RagAuth
         initialMode={authMode}
         onNavigate={handleViewNavigation}
-        onOpenDemo={() => setCurrentView('chat')}
+        onLoginSuccess={() => {
+          setIsAuthenticated(true)
+          setCurrentView('chat')
+        }}
+        onOpenDemo={() => {
+          setIsAuthenticated(true) // السماح للحكام والزوار بالدخول التجريبي
+          setCurrentView('chat')
+        }}
+      />
+    )
+  }
+
+  // حماية مسار الشات: منع الدخول نهائياً إذا لم يتم تسجيل الدخول أو استخدام الحساب التجريبي
+  if (currentView === 'chat' && !isAuthenticated) {
+    return (
+      <RagAuth
+        initialMode="login"
+        onNavigate={handleViewNavigation}
+        onLoginSuccess={() => {
+          setIsAuthenticated(true)
+          setCurrentView('chat')
+        }}
+        onOpenDemo={() => {
+          setIsAuthenticated(true)
+          setCurrentView('chat')
+        }}
       />
     )
   }
 
   // الشاشة الثالثة: واجهة الدردشة الأكاديمية (Chat Dashboard)
-  return (
+return (
     <main dir="ltr" className="flex h-dvh min-h-dvh overflow-hidden bg-[#F4F7FB] text-[#243247]">
-      {/* 1. الشريط الجانبي للمحادثات والمقاييس */}
+      {/* 1. الشريط الجانبي للمحادثات السابقة فقط */}
       <RagSidebar
         conversations={conversations}
         activeConversationId={activeConversation?.id}
@@ -78,22 +103,25 @@ export default function Home() {
 
           <div className="min-w-0 flex-1 text-center">
             <h1 id="chat-heading" className="truncate text-sm font-bold text-[#0B2D5C]">
-              {activeSubject?.nameEn}
+              {activeConversation?.title || 'Academic Chat'}
             </h1>
             <p className="mt-0.5 truncate text-[11px] text-[#243247]/65">
-              {activeSubject?.nameAr} <span aria-hidden="true">·</span> Academic Chat
+              USTHB RAG Assistant <span aria-hidden="true">·</span> Secure Session
             </p>
           </div>
 
           <div className="flex shrink-0 items-center gap-2">
             <span className="hidden rounded-full border border-[#C9D7E8] bg-[#EAF2FF] px-2.5 py-1 text-[10px] font-semibold text-[#0B2D5C] sm:inline-flex">
-              MVP version
+              Judge Preview
             </span>
             <button
               type="button"
               aria-label="Back to landing page"
               title="Back to landing page"
-              onClick={() => setCurrentView('home')}
+              onClick={() => {
+                setIsAuthenticated(false)
+                setCurrentView('home')
+              }}
               className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-xl border border-[#C9D7E8] bg-white px-2.5 text-[11px] font-semibold text-[#0B2D5C] transition hover:bg-[#EAF2FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0]"
             >
               <HomeIcon size={15} aria-hidden="true" />
@@ -112,7 +140,6 @@ export default function Home() {
           <RagChatFeed
             conversationId={activeConversation?.id}
             messages={activeMessages}
-            subject={activeSubject}
           />
         </div>
 
