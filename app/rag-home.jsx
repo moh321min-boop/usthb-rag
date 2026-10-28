@@ -22,31 +22,31 @@ import { RagThemeToggle } from './rag-theme-provider'
 const featureCards = [
   {
     number: '01',
-    Icon: FileText,
-    title: 'إجابات موثوقة بمراجع دقيقة',
-    description: 'استكشف الإجابات مع إحالات واضحة إلى ملفات PDF والصفحات ذات الصلة، لتعود إلى المصدر وتراجع المعلومة بثقة.',
-    detail: 'المصدر قريب من كل إجابة',
+    Icon: BookOpen,
+    title: 'تغطية شاملة للمناهج الرسمية',
+    description: 'مقررات ومحاضرات علوم الحاسوب والإعلام الآلي في USTHB، من الخوارزميات وهياكل البيانات إلى قواعد البيانات والشبكات.',
+    detail: 'مقررات قسم الإعلام الآلي',
   },
   {
     number: '02',
-    Icon: BookOpen,
-    title: 'تغطية شاملة للمناهج',
-    description: 'مساحة منظمة لمواد الإعلام الآلي، من الخوارزميات وهياكل البيانات إلى قواعد البيانات والشبكات.',
-    detail: 'مواد علوم الحاسوب',
+    Icon: MessageCircle,
+    title: 'دردشة ذكية ومباشرة',
+    description: 'اسأل واستفسر بحرية عن دروسك ومواضيعك الدراسية، واحصل على شروحات واضحة ودقيقة مصممة خصيصاً للطلاب.',
+    detail: 'تفاعل أكاديمي سريع',
   },
   {
     number: '03',
-    Icon: MessageCircle,
-    title: 'تفاعل سريع وسهل',
-    description: 'اسأل بالعربية، تنقّل ببساطة بين مواضيعك، وواصل المراجعة ضمن تجربة واضحة ومريحة.',
-    detail: 'واجهة عربية من البداية',
+    Icon: FileText,
+    title: 'أرشيف المحاضرات والامتحانات',
+    description: 'وصول فوري وسهل إلى محتوى المحاضرات وامتحانات السنوات السابقة لمراجعة شاملة وفعالة قبل الامتحانات.',
+    detail: 'مراجع موثوقة ومفحوصة',
   },
 ]
 
 const universityDocuments = [
-  'المحاضرات',
+  'المحاضرات الرسمية',
   'أرشيف الامتحانات',
-  'المناهج الرسمية',
+  'المناهج والمقررات',
 ]
 
 const usefulLinks = [
@@ -78,138 +78,128 @@ export function RagLanding({ onNavigate }) {
     onNavigate('auth', mode)
   }
 
-  function closeMobileMenu() {
-    setIsMobileMenuOpen(false)
-  }
-
   return (
     <main dir="rtl" className="min-h-dvh overflow-hidden bg-background text-foreground">
       <header className="sticky top-0 z-50 border-b border-border/80 bg-card/95 backdrop-blur">
-  <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-    {/* الجهة اليمنى: الشعار وعنوان المنصة */}
-    <a href="#home" className="flex min-w-0 items-center gap-3" aria-label="RAG-USTHB، الرئيسية">
-      <img
-        src="/usthb-logo.png"
-        alt="شعار جامعة العلوم والتكنولوجيا هواري بومدين"
-        width="100"
-        height="99"
-        className="size-11 shrink-0 object-contain sm:size-12"
-      />
-      <span className="min-w-0">
-        <span dir="ltr" className="block text-left text-[15px] font-extrabold tracking-tight text-deep-blue sm:text-base">
-          RAG-USTHB
-        </span>
-        <span className="mt-0.5 block truncate text-[10px] font-medium text-muted-foreground/65 sm:text-[11px]">
-          مساعدك الأكاديمي الذكي
-        </span>
-      </span>
-    </a>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+          {/* الجهة اليمنى: الشعار وعنوان المنصة */}
+          <a href="#home" className="flex min-w-0 items-center gap-3" aria-label="RAG-USTHB، الرئيسية">
+            <img
+              src="/usthb-logo.png"
+              alt="شعار جامعة العلوم والتكنولوجيا هواري بومدين"
+              width="100"
+              height="99"
+              className="size-11 shrink-0 object-contain sm:size-12"
+            />
+            <span className="min-w-0">
+              <span dir="ltr" className="block text-left text-[15px] font-extrabold tracking-tight text-deep-blue sm:text-base">
+                RAG-USTHB
+              </span>
+              <span className="mt-0.5 block truncate text-[10px] font-medium text-muted-foreground/65 sm:text-[11px]">
+                مساعدك الأكاديمي الذكي
+              </span>
+            </span>
+          </a>
 
-    {/* الجهة اليسرى: الأزرار وموقع المظهر (تظهر في الشاشات الكبيرة) */}
-    <div className="hidden items-center gap-2.5 lg:flex">
-      <RagThemeToggle />
-      <button
-        type="button"
-        onClick={() => openAuth('login')}
-        className="inline-flex min-h-11 items-center justify-center rounded-xl border border-link/35 bg-card px-4 text-sm font-bold text-deep-blue transition hover:border-link hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-      >
-        تسجيل الدخول
-      </button>
-      <button
-        type="button"
-        onClick={() => openAuth('register')}
-        className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-      >
-        إنشاء حساب
-      </button>
-    </div>
+          {/* الجهة اليسرى: الأزرار وموقع المظهر (تظهر في الشاشات الكبيرة) */}
+          <div className="hidden items-center gap-2.5 lg:flex">
+            <RagThemeToggle />
+            <button
+              type="button"
+              onClick={() => openAuth('login')}
+              className="inline-flex min-h-11 items-center justify-center rounded-xl border border-link/35 bg-card px-4 text-sm font-bold text-deep-blue transition hover:border-link hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              تسجيل الدخول
+            </button>
+            <button
+              type="button"
+              onClick={() => openAuth('register')}
+              className="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-4 text-sm font-bold text-primary-foreground shadow-sm transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            >
+              إنشاء حساب
+            </button>
+          </div>
 
-    {/* زر القائمة المنسدلة للموبايل */}
-    <button
-      type="button"
-      aria-label={isMobileMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
-      aria-expanded={isMobileMenuOpen}
-      aria-controls="landing-mobile-menu"
-      onClick={() => setIsMobileMenuOpen((open) => !open)}
-      className="flex size-10 items-center justify-center rounded-xl border border-border bg-card text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:hidden"
-    >
-      {isMobileMenuOpen ? <X size={19} aria-hidden="true" /> : <Menu size={19} aria-hidden="true" />}
-    </button>
-  </div>
+          {/* زر القائمة المنسدلة للموبايل */}
+          <button
+            type="button"
+            aria-label={isMobileMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="landing-mobile-menu"
+            onClick={() => setIsMobileMenuOpen((open) => !open)}
+            className="flex size-10 items-center justify-center rounded-xl border border-border bg-card text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring lg:hidden"
+          >
+            {isMobileMenuOpen ? <X size={19} aria-hidden="true" /> : <Menu size={19} aria-hidden="true" />}
+          </button>
+        </div>
 
-  {/* القائمة المنسدلة للشاشات الصغيرة */}
-  {isMobileMenuOpen && (
-    <div id="landing-mobile-menu" className="border-t border-border bg-card px-4 pb-4 pt-3 sm:px-6 lg:hidden">
-      <div className="flex items-center justify-between rounded-xl border border-border bg-background px-3 py-2">
-        <span className="text-xs font-semibold text-foreground">المظهر</span>
-        <RagThemeToggle />
-      </div>
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        <button
-          type="button"
-          onClick={() => openAuth('login')}
-          className="min-h-11 rounded-xl border border-link/40 px-3 text-sm font-bold text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
-        >
-          تسجيل الدخول
-        </button>
-        <button
-          type="button"
-          onClick={() => openAuth('register')}
-          className="min-h-11 rounded-xl bg-primary px-3 text-sm font-bold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
-        >
-          إنشاء حساب
-        </button>
-      </div>
-    </div>
-  )}
-</header>
+        {/* القائمة المنسدلة للشاشات الصغيرة */}
+        {isMobileMenuOpen && (
+          <div id="landing-mobile-menu" className="border-t border-border bg-card px-4 pb-4 pt-3 sm:px-6 lg:hidden">
+            <div className="flex items-center justify-between rounded-xl border border-border bg-background px-3 py-2">
+              <span className="text-xs font-semibold text-foreground">المظهر</span>
+              <RagThemeToggle />
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => openAuth('login')}
+                className="min-h-11 rounded-xl border border-link/40 px-3 text-sm font-bold text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+              >
+                تسجيل الدخول
+              </button>
+              <button
+                type="button"
+                onClick={() => openAuth('register')}
+                className="min-h-11 rounded-xl bg-primary px-3 text-sm font-bold text-primary-foreground transition hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+              >
+                إنشاء حساب
+              </button>
+            </div>
+          </div>
+        )}
+      </header>
 
-<section id="home" className="relative isolate scroll-mt-24 overflow-hidden">
-  <div aria-hidden="true" className="pointer-events-none absolute -left-32 -top-28 size-[420px] rounded-full bg-link/10 blur-[90px]" />
-  <div aria-hidden="true" className="pointer-events-none absolute -right-40 bottom-0 size-[380px] rounded-full bg-sidebar/[0.06] blur-[90px]" />
+      <section id="home" className="relative isolate scroll-mt-24 overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute -left-32 -top-28 size-[420px] rounded-full bg-link/10 blur-[90px]" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-40 bottom-0 size-[380px] rounded-full bg-sidebar/[0.06] blur-[90px]" />
 
-  {/* الحاوية الأساسية للـ Grid */}
-  <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:py-24">
-    <div className="relative z-10 max-w-2xl">
-      <div className="inline-flex items-center gap-2 rounded-full border border-link/15 bg-card px-3.5 py-2 text-xs font-bold text-deep-blue shadow-sm">
-        <span className="flex size-6 items-center justify-center rounded-full bg-secondary text-link">
-          <Sparkles size={14} aria-hidden="true" />
-        </span>
-        USTHB Student Knowledge Platform
-      </div>
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:py-24">
+          <div className="relative z-10 max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-link/15 bg-card px-3.5 py-2 text-xs font-bold text-deep-blue shadow-sm">
+              <span className="flex size-6 items-center justify-center rounded-full bg-secondary text-link">
+                <Sparkles size={14} aria-hidden="true" />
+              </span>
+              USTHB Student Knowledge Platform
+            </div>
 
-      <h1 className="mt-6 text-4xl font-extrabold leading-[1.35] tracking-tight text-deep-blue sm:text-5xl lg:text-[3.45rem]">
-        Your AI-Powered Academic Assistant at{' '}
-        <span className="mt-1 block text-link">USTHB</span>
-      </h1>
-      
-      {/* تصحيح اتجاه النص الإنجليزي باستخدام dir="ltr" لتجنب انعكاس علامات الترقيم */}
-      <p dir="ltr" className="mt-5 max-w-xl text-right text-base leading-8 text-muted-foreground/75 sm:text-lg">
-        Search lectures, exam archives, and official curricula through an advanced RAG experience, delivering precise answers backed by trusted sources.
-      </p>
+            <h1 className="mt-6 text-4xl font-extrabold leading-[1.35] tracking-tight text-deep-blue sm:text-5xl lg:text-[3.45rem]">
+              Your AI-Powered Academic Assistant at{' '}
+              <span className="mt-1 block text-link">USTHB</span>
+            </h1>
+            
+            <p dir="ltr" className="mt-5 max-w-xl text-right text-base leading-8 text-muted-foreground/75 sm:text-lg">
+              Search lectures, exam archives, and official curricula through an advanced RAG experience, delivering precise answers backed by trusted sources.
+            </p>
 
-      {/* حاوية الأزرار بحد أقصى 300 بكسل وعرض عمودي متناسق */}
-      <div className="mt-8 flex w-full max-w-[300px] flex-col items-stretch gap-3">
-        <button
-          type="button"
-          onClick={() => onNavigate('chat')}
-          className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl bg-primary px-6 text-sm font-extrabold text-primary-foreground shadow-[0_14px_30px_-14px_rgba(21,101,192,0.75)] transition hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        >
-          Get Started Now
-          <ArrowLeft size={18} aria-hidden="true" />
-        </button>
-        
-        {/* تنسيق الزر الثانوي بإضافة خلفية وحدود خفيفة ليصبح زر حقيقي متوازن */}
-        <a
-          href="#subjects"
-          className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl border border-link/35 bg-card px-6 text-sm font-bold text-deep-blue transition hover:border-link hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        >
-          Explore Features
-          <ArrowLeft size={15} aria-hidden="true" />
-        </a>
-      </div>
-    </div>
-    </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <button
+                type="button"
+                onClick={() => onNavigate('chat')}
+                className="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-primary px-6 text-sm font-extrabold text-primary-foreground shadow-[0_14px_30px_-14px_rgba(21,101,192,0.75)] transition hover:-translate-y-0.5 hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
+                Get Started Now
+                <ArrowLeft size={18} aria-hidden="true" />
+              </button>
+              
+              <a
+                href="#features"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-link/35 bg-card px-6 text-sm font-bold text-deep-blue transition hover:border-link hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
+                Explore Features
+                <ArrowLeft size={15} aria-hidden="true" />
+              </a>
+            </div>
 
             <ul className="mt-8 flex flex-wrap gap-x-5 gap-y-3 text-xs font-semibold text-muted-foreground/70">
               {universityDocuments.map((document) => (
@@ -232,8 +222,8 @@ export function RagLanding({ onNavigate }) {
                     <BookOpen size={19} aria-hidden="true" />
                   </span>
                   <div>
-                    <p className="text-sm font-bold">اسأل موادك الدراسية</p>
-                    <p className="mt-0.5 text-[10px] text-sidebar-foreground/65">بحث أكاديمي بمصادر واضحة</p>
+                    <p className="text-sm font-bold">مساعد المواد الدراسية</p>
+                    <p className="mt-0.5 text-[10px] text-sidebar-foreground/65">استفسار أكاديمي فوري</p>
                   </div>
                 </div>
                 <span className="rounded-full border border-sidebar-foreground/20 bg-sidebar-foreground/10 px-2.5 py-1 text-[10px] font-semibold text-sidebar-foreground/90">
@@ -245,7 +235,7 @@ export function RagLanding({ onNavigate }) {
                 <div className="flex items-center gap-3 rounded-2xl border border-border bg-background px-4 py-3.5">
                   <Search size={18} className="shrink-0 text-link" aria-hidden="true" />
                   <p className="text-sm font-semibold leading-6 text-foreground">
-                    ما التعقيد الزمني لخوارزمية البحث الثنائي؟
+                    ما هو التعقيد الزمني لخوارزمية البحث الثنائي؟
                   </p>
                 </div>
 
@@ -254,9 +244,9 @@ export function RagLanding({ onNavigate }) {
                     <Sparkles size={17} aria-hidden="true" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs font-extrabold text-deep-blue">إجابة مرتبطة بالمصدر</p>
+                    <p className="text-xs font-extrabold text-deep-blue">إجابة أكاديمية موثوقة</p>
                     <p className="mt-1.5 text-xs leading-6 text-muted-foreground/75">
-                      يعمل البحث الثنائي على تقليص مجال البحث إلى النصف في كل خطوة، لذلك يكون تعقيده{' '}
+                      يعمل البحث الثنائي على تقليص مجال البحث إلى النصف في كل خطوة، لذلك يكون تعقيده الزمني{' '}
                       <span dir="ltr" className="font-bold text-link">O(log n)</span>.
                     </p>
                   </div>
@@ -264,17 +254,17 @@ export function RagLanding({ onNavigate }) {
 
                 <div className="mt-5 border-t border-border pt-4">
                   <div className="mb-2.5 flex items-center justify-between gap-3">
-                    <p className="text-[11px] font-bold text-deep-blue">مراجع مقترحة</p>
-                    <span className="text-[10px] text-muted-foreground/50">ملفات PDF</span>
+                    <p className="text-[11px] font-bold text-deep-blue">المقررات المرتبطة</p>
+                    <span className="text-[10px] text-muted-foreground/50">قسم الإعلام الآلي</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <span dir="ltr" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-2.5 py-2 text-[10px] font-semibold text-foreground">
                       <FileText size={14} className="text-link" aria-hidden="true" />
-                      Algorithms_L1.pdf · ص 12
+                      Algorithms & Data Structures
                     </span>
                     <span dir="ltr" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-2.5 py-2 text-[10px] font-semibold text-foreground">
                       <FileText size={14} className="text-link" aria-hidden="true" />
-                      Ch3_Notes.pdf · ص 4
+                      Exam Archive L2
                     </span>
                   </div>
                 </div>
@@ -284,17 +274,17 @@ export function RagLanding({ onNavigate }) {
         </div>
       </section>
 
-      <section id="subjects" className="scroll-mt-24 border-y border-border/80 bg-card/70 py-16 sm:py-20">
+      <section id="features" className="scroll-mt-24 border-y border-border/80 bg-card/70 py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-extrabold tracking-wide text-link">لماذا RAG-USTHB؟</p>
               <h2 className="mt-2 text-2xl font-extrabold leading-9 text-deep-blue sm:text-3xl">
-                مذاكرة أوضح، ومعلومة أقرب إلى مصدرها
+                مراجعة أذكى ومقررات أسهل للوصول
               </h2>
             </div>
             <p className="max-w-md text-sm leading-7 text-muted-foreground/70">
-              أدوات بسيطة تساعدك على التركيز في محتوى تخصصك، وتنظيم رحلة المراجعة خطوة بخطوة.
+              أدوات تفاعلية صُممت خصيصاً لمساعدة طلاب كلية الإعلام الآلي في تنظيم رحلة المراجعة وتحصيل أفضل النتائج.
             </p>
           </div>
 
@@ -335,26 +325,26 @@ export function RagLanding({ onNavigate }) {
               عن المنصة
             </div>
             <h2 className="mt-5 max-w-xl text-2xl font-extrabold leading-10 sm:text-3xl">
-              معرفة جامعية منظمة، بتجربة صُممت لطلاب USTHB
+              منصة معرفية متكاملة لطلاب USTHB
             </h2>
             <p className="mt-3 max-w-xl text-sm leading-7 text-sidebar-foreground/75">
-              يجمع RAG-USTHB بين سهولة السؤال والرجوع إلى المحتوى الدراسي، حتى تكون مراجعتك أكثر تركيزاً ووضوحاً.
+              يجمع RAG-USTHB بين قوة الذكاء الاصطناعي ومحتوى المقررات الرسمية، لتستمتع بتجربة دراسية واضحة وخالية من التشتت.
             </p>
             <button
               type="button"
               onClick={() => onNavigate('chat')}
               className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-card px-5 text-sm font-extrabold text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sidebar-ring"
             >
-              استكشف المنصة
+              استكشف المنصة الآن
               <ArrowLeft size={16} aria-hidden="true" />
             </button>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
             {[
-              { step: '01', title: 'اختر المادة', text: 'ابدأ من تخصصك ومقرراتك.' },
-              { step: '02', title: 'اطرح سؤالك', text: 'صغ ما تريد مراجعته بالعربية.' },
-              { step: '03', title: 'راجع المصدر', text: 'تابع المعلومة إلى مرجعها.' },
+              { step: '01', title: 'اختر المادة', text: 'حدد مقرراتك الدراسية.' },
+              { step: '02', title: 'اطرح سؤالك', text: 'استفسر بالعربية أو الإنجليزية.' },
+              { step: '03', title: 'احصل على الإجابة', text: 'راجع إجابات دقيقة وموثوقة.' },
             ].map(({ step, title, text }) => (
               <div key={step} className="rounded-2xl border border-sidebar-foreground/15 bg-sidebar-foreground/[0.07] p-4">
                 <span dir="ltr" className="text-xs font-extrabold tracking-widest text-sidebar-foreground/55">{step}</span>
