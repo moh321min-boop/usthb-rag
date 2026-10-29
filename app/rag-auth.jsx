@@ -46,7 +46,7 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [status, setStatus] = useState('')
 
-  // مزامنة الوضع عند تغيّر المتغير القادم من الخارج (مثل الضغط على ابدأ الآن أو تسجيل الدخول)
+  // مزامنة الوضع عند تغيّر المتغير القادم من الخارج
   useEffect(() => {
     setMode(initialMode === 'register' ? 'register' : 'login')
     setStatus('')
@@ -73,8 +73,19 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
       setStatus('تم التحقق من بيانات الحساب بنجاح. جارٍ توجيهك إلى المنصة...')
       window.setTimeout(() => {
         onNavigate('chat')
-      }, 700)
-    }, 650)
+      }, 600)
+    }, 500)
+  }
+
+  // دخول سريع خاص بالحكام والمجربين
+  function handleJudgeLogin() {
+    if (isSubmitting) return
+    setIsSubmitting(true)
+    setStatus('جارٍ تسجيل الدخول بحساب الحكم التجريبي...')
+    window.setTimeout(() => {
+      setIsSubmitting(false)
+      onNavigate('chat')
+    }, 400)
   }
 
   function handleForgotPassword() {
@@ -137,7 +148,25 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
                 </p>
               </div>
 
-              <form key={mode} onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
+              {/* زر سريع خاص بالحكام لتسجيل الدخول الفوري ببيانات جاهزة */}
+              <div className="mt-5">
+                <button
+                  type="button"
+                  onClick={handleJudgeLogin}
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#1565C0]/40 bg-[#EAF2FF] px-4 text-sm font-bold text-[#1565C0] shadow-sm transition hover:bg-[#1565C0] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0]"
+                >
+                  <GraduationCap size={18} aria-hidden="true" />
+                  دخول سريع كحكم (حساب تجريبي جاهز)
+                </button>
+              </div>
+
+              <div className="my-5 flex items-center gap-3">
+                <div className="h-px flex-1 bg-[#C9D7E8]" />
+                <span className="text-[11px] font-bold text-[#243247]/45">أو باستخدام الحساب الجامعي</span>
+                <div className="h-px flex-1 bg-[#C9D7E8]" />
+              </div>
+
+              <form key={mode} onSubmit={handleSubmit} className="flex flex-col gap-4">
                 {isRegister && (
                   <>
                     <AuthTextField
@@ -277,7 +306,7 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
                 )}
                 <p className="inline-flex items-center gap-1.5 text-[10px] leading-5 text-[#243247]/55">
                   <Info size={13} aria-hidden="true" />
-                  بوابة مصادقة موثوقة لطلاب جامعة USTHB.
+                  بوابة مصادقة آمنة لطلاب جامعة USTHB.
                 </p>
               </div>
 
