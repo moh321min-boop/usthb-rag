@@ -16,6 +16,7 @@ import {
   Mail,
   UserRound,
   Globe,
+  BookOpen,
 } from 'lucide-react'
 
 function AuthTextField({ id, label, icon: Icon, direction = 'ltr', isValid, ...inputProps }) {
@@ -56,7 +57,7 @@ function AuthTextField({ id, label, icon: Icon, direction = 'ltr', isValid, ...i
 
 export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initialLang = 'en' }) {
   const [mode, setMode] = useState(initialMode === 'register' ? 'register' : 'login')
-  const [lang, setLang] = useState(initialLang) // English primary, Arabic secondary
+  const [lang, setLang] = useState(initialLang)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false)
@@ -88,12 +89,11 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
     setLang((prev) => (prev === 'en' ? 'ar' : 'en'))
   }
 
-  // Password strict validation rules
+  // Password validation rules
   const hasMinLength = password.length >= 8
   const hasUpperCase = /[A-Z]/.test(password)
   const hasNumber = /[0-9]/.test(password)
   const hasSpecialChar = /[^A-Za-z0-9]/.test(password)
-  const passwordsMatch = isRegister ? password === confirmPassword && confirmPassword !== '' : true
 
   const isEmailValid = email.includes('@') && email.includes('.')
   const isNameValid = name.trim().length > 2
@@ -105,10 +105,10 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
 
     if (isRegister) {
       if (!hasMinLength || !hasUpperCase || !hasNumber || !hasSpecialChar) {
-        setStatus(isRtl ? 'يرجى استيفاء جميع شروط كلمة المرور (أحرف كبيرة، أرقام، رموز).' : 'Please meet all password requirements.')
+        setStatus(isRtl ? 'يرجى استيفاء جميع شروط كلمة المرور.' : 'Please meet all password requirements.')
         return
       }
-      if (!passwordsMatch) {
+      if (password !== confirmPassword) {
         setStatus(isRtl ? 'كلمتا المرور غير متطابقتين.' : 'Passwords do not match.')
         return
       }
@@ -117,10 +117,11 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
     setIsSubmitting(true)
     setStatus('')
 
+    // دالة وهمية تحسب 3 ثوان ثم ترسل أمر التوجيه إلى الشات (كما طلبت)
     window.setTimeout(() => {
       setIsSubmitting(false)
       onNavigate('chat')
-    }, 500)
+    }, 3000)
   }
 
   // Judge Demo Fill for Login mode
@@ -155,7 +156,7 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                   type="button"
                   onClick={toggleLanguage}
                   className="inline-flex h-8 items-center gap-1.5 rounded-xl border border-border bg-secondary px-2.5 text-xs font-semibold text-deep-blue transition hover:bg-secondary/80"
-                  title="Toggle Language / تغيير اللغة"
+                  title="Toggle Language"
                 >
                   <Globe size={14} aria-hidden="true" />
                   <span>{lang === 'en' ? 'العربية' : 'English'}</span>
@@ -344,11 +345,6 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                         {isConfirmPasswordVisible ? <EyeOff size={15} aria-hidden="true" /> : <Eye size={15} aria-hidden="true" />}
                       </button>
                     </div>
-                    {confirmPassword && (
-                      <p className={`mt-1 text-[10px] ${passwordsMatch ? 'text-emerald-600 font-semibold' : 'text-destructive'}`}>
-                        {passwordsMatch ? (isRtl ? '✓ كلمتا المرور متطابقتان' : '✓ Passwords match') : (isRtl ? '✗ كلمتا المرور غير متطابقتين' : '✗ Passwords do not match')}
-                      </p>
-                    )}
                   </div>
                 )}
 
@@ -358,7 +354,7 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                   className="mt-1 inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-link px-4 text-xs font-extrabold text-white shadow-sm transition hover:bg-deep-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-link disabled:cursor-wait disabled:opacity-75"
                 >
                   {isSubmitting && <Loader2 size={15} className="animate-spin" aria-hidden="true" />}
-                  {isSubmitting ? (isRtl ? 'جارٍ التحقق...' : 'Verifying...') : isRegister ? (isRtl ? 'إنشاء الحساب' : 'Create Account') : (isRtl ? 'تسجيل الدخول' : 'Sign In')}
+                  {isSubmitting ? (isRtl ? 'جارٍ التحقق والتوجيه...' : 'Verifying & Redirecting...') : isRegister ? (isRtl ? 'إنشاء الحساب' : 'Create Account') : (isRtl ? 'تسجيل الدخول' : 'Sign In')}
                 </button>
               </form>
 
@@ -369,16 +365,8 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                 </div>
               )}
 
-              <div className="mt-3 flex items-center justify-between text-xs">
-                {!isRegister ? (
-                  <button
-                    type="button"
-                    onClick={(e) => { e.preventDefault(); setStatus(isRtl ? 'تم إرسال تعليمات استعادة كلمة المرور.' : 'Password reset instructions sent.'); }}
-                    className="font-bold text-link transition hover:underline"
-                  >
-                    {isRtl ? 'هل نسيت كلمة السر؟' : 'Forgot Password?'}
-                  </button>
-                ) : (
+              <div className="mt-3 flex items-center justify-end text-xs">
+                {isRegister && (
                   <button
                     type="button"
                     onClick={() => changeMode('login')}
@@ -391,41 +379,28 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
             </div>
           </div>
 
-          {/* Left: Dark Blue Section (Aside) with Judge Demo Button (Visible ONLY on Login mode) */}
+          {/* Left: Dark Blue Section (Aside) with Organized Logo & Judge Demo Button moved to lower section */}
           <aside className="relative hidden flex-col justify-between bg-deep-blue p-6 text-white lg:flex">
             <div aria-hidden="true" className="pointer-events-none absolute -left-20 -top-20 size-60 rounded-full bg-link/30 blur-[60px]" />
 
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm">
-                  <img
-                    src="/usthb-logo.png"
-                    alt="USTHB Logo"
-                    width="60"
-                    height="59"
-                    className="size-full object-contain"
-                  />
-                </span>
-                <div>
-                  <p dir="ltr" className="text-xs font-extrabold tracking-tight">RAG-USTHB</p>
-                  <p className="text-[9px] text-white/65">Houari Boumediene University</p>
-                </div>
+            {/* 1. Header / Logo Section (Top) */}
+            <div className="relative z-10 flex items-center gap-2.5">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm">
+                <img
+                  src="/usthb-logo.png"
+                  alt="USTHB Logo"
+                  width="60"
+                  height="59"
+                  className="size-full object-contain"
+                />
+              </span>
+              <div>
+                <p dir="ltr" className="text-xs font-extrabold tracking-tight">RAG-USTHB</p>
+                <p className="text-[9px] text-white/65">Houari Boumediene University</p>
               </div>
-
-              {/* زر بيانات الحكام في القسم الأيسر ذو اللون الأزرق الداكن - يظهر فقط عند تسجيل الدخول (!isRegister) */}
-              {!isRegister && (
-                <button
-                  type="button"
-                  onClick={handleJudgeDemoFill}
-                  className="inline-flex min-h-8 items-center gap-1.5 rounded-xl border border-white/30 bg-white/10 px-3 text-xs font-bold text-white transition hover:bg-white hover:text-deep-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
-                  title={isRtl ? 'ملء بيانات الحكم التجريبي في الحقول' : 'Fill judge demo credentials'}
-                >
-                  <GraduationCap size={15} aria-hidden="true" />
-                  <span>{isRtl ? 'تعبئة بيانات الحكام' : 'Judge Demo Fill'}</span>
-                </button>
-              )}
             </div>
 
+            {/* 2. Middle Content Section */}
             <div className="relative z-10 my-6">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.07] px-2.5 py-0.5 text-[10px] font-bold text-white/85">
                 <GraduationCap size={13} aria-hidden="true" />
@@ -439,10 +414,25 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
               </p>
             </div>
 
-            <div className="relative z-10 rounded-xl border border-white/15 bg-white/[0.07] p-3">
-              <div className="flex items-center gap-2.5">
-                <FileText size={15} className="shrink-0 text-white/80" aria-hidden="true" />
-                <span className="text-[11px] text-white/80">{isRtl ? 'مستندات ومحاضرات رسمية' : 'Official Lectures & Syllabi'}</span>
+            {/* 3. Lower Section (Where the Judge Button is placed now as requested) */}
+            <div className="relative z-10 flex flex-col gap-3">
+              {!isRegister && (
+                <button
+                  type="button"
+                  onClick={handleJudgeDemoFill}
+                  className="inline-flex min-h-9 w-full items-center justify-center gap-1.5 rounded-xl border border-white/30 bg-white/10 px-3 text-xs font-bold text-white transition hover:bg-white hover:text-deep-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-white shadow-sm"
+                  title="Fill judge demo credentials"
+                >
+                  <GraduationCap size={16} aria-hidden="true" />
+                  <span>{isRtl ? 'تعبئة بيانات الحكام' : 'Judge Demo Fill'}</span>
+                </button>
+              )}
+
+              <div className="rounded-xl border border-white/15 bg-white/[0.07] p-3">
+                <div className="flex items-center gap-2.5">
+                  <FileText size={15} className="shrink-0 text-white/80" aria-hidden="true" />
+                  <span className="text-[11px] text-white/80">{isRtl ? 'مستندات ومحاضرات رسمية' : 'Official Lectures & Syllabi'}</span>
+                </div>
               </div>
             </div>
           </aside>
