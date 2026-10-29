@@ -17,36 +17,45 @@ import {
   UserRound,
 } from 'lucide-react'
 
-function AuthTextField({ id, label, icon: Icon, direction = 'rtl', ...inputProps }) {
+function AuthTextField({ id, label, icon: Icon, direction = 'ltr', ...inputProps }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-xs font-bold text-[#243247]">
+      <label htmlFor={id} className="mb-1.5 block text-xs font-bold text-foreground">
         {label}
       </label>
       <div className="relative">
         <Icon
           size={17}
           aria-hidden="true"
-          className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#1565C0]"
+          className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-link ${direction === 'rtl' ? 'right-3.5' : 'left-3.5'}`}
         />
         <input
           id={id}
           dir={direction}
           {...inputProps}
-          className={`h-12 w-full rounded-xl border border-[#C9D7E8] bg-[#F4F7FB] pr-11 pl-4 text-sm text-[#243247] outline-none transition placeholder:text-[#243247]/45 focus:border-[#1565C0] focus:bg-white focus:ring-4 focus:ring-[#1565C0]/10 ${direction === 'ltr' ? 'text-left' : 'text-right'}`}
+          className={`h-11 w-full rounded-xl border border-border bg-secondary/50 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-link focus:bg-card focus:ring-4 focus:ring-link/10 ${
+            direction === 'rtl' ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4 text-left'
+          }`}
         />
       </div>
     </div>
   )
 }
 
-export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
+export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, currentLang = 'en' }) {
   const [mode, setMode] = useState(initialMode === 'register' ? 'register' : 'login')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [status, setStatus] = useState('')
 
-  // مزامنة الوضع عند تغيّر المتغير القادم من الخارج
+  // حقول النموذج للتجربة / الحكام
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [studentId, setStudentId] = useState('')
+
+  const isRtl = currentLang === 'ar'
+
   useEffect(() => {
     setMode(initialMode === 'register' ? 'register' : 'login')
     setStatus('')
@@ -70,154 +79,147 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
 
     window.setTimeout(() => {
       setIsSubmitting(false)
-      setStatus('تم التحقق من بيانات الحساب بنجاح. جارٍ توجيهك إلى المنصة...')
-      window.setTimeout(() => {
-        onNavigate('chat')
-      }, 600)
+      onNavigate('chat')
     }, 500)
   }
 
-  // دخول سريع خاص بالحكام والمجربين
-  function handleJudgeLogin() {
-    if (isSubmitting) return
-    setIsSubmitting(true)
-    setStatus('جارٍ تسجيل الدخول بحساب الحكم التجريبي...')
-    window.setTimeout(() => {
-      setIsSubmitting(false)
-      onNavigate('chat')
-    }, 400)
+  // تعبئة الحقول تلقائياً للحكام عند تسجيل الدخول
+  function handleJudgeDemoFill() {
+    setEmail('judge@usthb.dz')
+    setPassword('usthb2026')
+    if (isRegister) {
+      setName('Judge Examiner')
+      setStudentId('20260000')
+    }
+    setStatus(isRtl ? 'تم ملء الحقول ببيانات الحساب التجريبي بنجاح.' : 'Demo credentials filled successfully.')
   }
 
-  function handleForgotPassword() {
-    setStatus('تم إرسال تعليمات استعادة كلمة المرور إلى بريدك الجامعي.')
+  function handleForgotPassword(e) {
+    e.preventDefault()
+    setStatus(isRtl ? 'تم إرسال تعليمات استعادة كلمة المرور.' : 'Password reset instructions sent.')
   }
 
   return (
-    <main dir="rtl" className="relative flex min-h-dvh flex-col items-center justify-center overflow-x-hidden bg-[#F4F7FB] px-4 py-8 text-[#243247] sm:px-6 sm:py-10">
-      <div aria-hidden="true" className="pointer-events-none absolute -left-40 -top-40 size-[440px] rounded-full bg-[#1565C0]/[0.07] blur-[100px]" />
-      <div aria-hidden="true" className="pointer-events-none absolute -bottom-48 -right-32 size-[480px] rounded-full bg-[#0B2D5C]/[0.06] blur-[110px]" />
+    <main dir={isRtl ? 'rtl' : 'ltr'} className="relative flex min-h-dvh flex-col items-center justify-center overflow-x-hidden bg-background px-4 py-6 text-foreground sm:px-6">
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 -top-32 size-96 rounded-full bg-link/[0.05] blur-[90px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -right-32 size-96 rounded-full bg-deep-blue/[0.05] blur-[90px]" />
 
-      <section aria-labelledby="auth-heading" className="relative w-full max-w-6xl overflow-hidden rounded-[28px] border border-[#C9D7E8] bg-white shadow-[0_28px_90px_-48px_rgba(11,45,92,0.4)] sm:rounded-[32px]">
-        <div className="grid lg:min-h-[690px] lg:grid-cols-[1fr_0.95fr]">
-          <div className="p-5 sm:p-8 lg:p-11 xl:p-14">
+      <section aria-labelledby="auth-heading" className="relative w-full max-w-4xl overflow-hidden rounded-3xl border border-border bg-card shadow-[0_20px_60px_-20px_rgba(11,45,92,0.15)]">
+        <div className="grid lg:grid-cols-[1fr_0.9fr]">
+          
+          {/* الجانب الأيمن: نموذج الإدخال */}
+          <div className="p-6 sm:p-8 lg:p-10">
             <div className="flex items-center justify-between gap-4">
               <button
                 type="button"
                 onClick={() => onNavigate('home')}
-                className="inline-flex min-h-10 items-center gap-2 rounded-lg px-2 text-xs font-bold text-[#0B2D5C] transition hover:bg-[#EAF2FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1565C0]"
+                className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-border bg-secondary/60 px-3 text-xs font-bold text-deep-blue transition hover:bg-secondary hover:border-link/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-link"
               >
-                <ArrowRight size={16} aria-hidden="true" />
-                العودة إلى الرئيسية
+                <ArrowRight size={15} aria-hidden="true" className={isRtl ? '' : 'rotate-180'} />
+                {isRtl ? 'العودة إلى الرئيسية' : 'Back to Home'}
               </button>
-              <span dir="ltr" className="text-xs font-extrabold tracking-wide text-[#0B2D5C] lg:hidden">RAG-USTHB</span>
+              <span dir="ltr" className="text-xs font-extrabold tracking-wide text-deep-blue lg:hidden">RAG-USTHB</span>
             </div>
 
-            <div className="mx-auto mt-8 max-w-md sm:mt-10">
-              <div role="group" aria-label="اختيار نوع الحساب" className="grid grid-cols-2 rounded-xl bg-[#F4F7FB] p-1.5">
+            <div className="mx-auto mt-6 max-w-sm">
+              <div role="group" aria-label="Account mode switch" className="grid grid-cols-2 rounded-xl bg-secondary p-1">
                 <button
                   type="button"
                   aria-pressed={!isRegister}
                   onClick={() => changeMode('login')}
-                  className={`min-h-11 rounded-lg px-3 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1565C0] ${
-                    !isRegister ? 'bg-white text-[#0B2D5C] shadow-sm' : 'text-[#243247]/65 hover:text-[#0B2D5C]'
+                  className={`min-h-10 rounded-lg px-3 text-xs font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-link ${
+                    !isRegister ? 'bg-card text-deep-blue shadow-sm' : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  تسجيل الدخول
+                  {isRtl ? 'تسجيل الدخول' : 'Sign In'}
                 </button>
                 <button
                   type="button"
                   aria-pressed={isRegister}
                   onClick={() => changeMode('register')}
-                  className={`min-h-11 rounded-lg px-3 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1565C0] ${
-                    isRegister ? 'bg-white text-[#0B2D5C] shadow-sm' : 'text-[#243247]/65 hover:text-[#0B2D5C]'
+                  className={`min-h-10 rounded-lg px-3 text-xs font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-link ${
+                    isRegister ? 'bg-card text-deep-blue shadow-sm' : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
-                  حساب جديد
+                  {isRtl ? 'حساب جديد' : 'Register'}
                 </button>
               </div>
 
-              <div className="mt-7">
-                <p className="text-xs font-extrabold text-[#1565C0]">RAG-USTHB · بوابتك الدراسية</p>
-                <h1 id="auth-heading" className="mt-2 text-2xl font-extrabold leading-10 text-[#0B2D5C] sm:text-3xl">
-                  {isRegister ? 'أنشئ حسابك الجامعي' : 'مرحباً بعودتك'}
-                </h1>
-                <p className="mt-2 text-sm leading-7 text-[#243247]/65">
-                  {isRegister
-                    ? 'أدخل بياناتك للانضمام إلى مساحة الدراسة الأكاديمية.'
-                    : 'سجّل الدخول لمتابعة موادك ومحادثاتك الدراسية.'}
-                </p>
+              <div className="mt-6 flex items-center justify-between">
+                <div>
+                  <p className="text-[11px] font-extrabold text-link">RAG-USTHB Portal</p>
+                  <h1 id="auth-heading" className="mt-1 text-xl font-extrabold text-deep-blue sm:text-2xl">
+                    {isRegister ? (isRtl ? 'أنشئ حسابك الجامعي' : 'Create Account') : (isRtl ? 'مرحباً بعودتك' : 'Welcome Back')}
+                  </h1>
+                </div>
+
+                {/* زر التسجيل التجريبي: يظهر فقط عند تسجيل الدخول (ليس في حالة إنشاء حساب) */}
+                {!isRegister && (
+                  <button
+                    type="button"
+                    onClick={handleJudgeDemoFill}
+                    className="inline-flex min-h-9 items-center gap-1.5 rounded-xl border border-link/30 bg-secondary px-3 text-xs font-bold text-link transition hover:bg-link hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-link"
+                    title={isRtl ? 'ملء الحقول ببيانات الحكم التجريبي' : 'Fill demo credentials'}
+                  >
+                    <GraduationCap size={15} aria-hidden="true" />
+                    <span>{isRtl ? 'تجريبي (حكام)' : 'Demo Fill'}</span>
+                  </button>
+                )}
               </div>
 
-              {/* زر سريع خاص بالحكام لتسجيل الدخول الفوري ببيانات جاهزة */}
-              <div className="mt-5">
-                <button
-                  type="button"
-                  onClick={handleJudgeLogin}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#1565C0]/40 bg-[#EAF2FF] px-4 text-sm font-bold text-[#1565C0] shadow-sm transition hover:bg-[#1565C0] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0]"
-                >
-                  <GraduationCap size={18} aria-hidden="true" />
-                  دخول سريع كحكم (حساب تجريبي جاهز)
-                </button>
-              </div>
-
-              <div className="my-5 flex items-center gap-3">
-                <div className="h-px flex-1 bg-[#C9D7E8]" />
-                <span className="text-[11px] font-bold text-[#243247]/45">أو باستخدام الحساب الجامعي</span>
-                <div className="h-px flex-1 bg-[#C9D7E8]" />
-              </div>
-
-              <form key={mode} onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <form key={mode} onSubmit={handleSubmit} className="mt-5 flex flex-col gap-3.5">
                 {isRegister && (
                   <>
                     <AuthTextField
                       id="full-name"
-                      label="الاسم الكامل"
+                      label={isRtl ? 'الاسم الكامل' : 'Full Name'}
                       icon={UserRound}
                       type="text"
                       name="name"
-                      autoComplete="name"
-                      placeholder="الاسم واللقب"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      direction={isRtl ? 'rtl' : 'ltr'}
+                      placeholder={isRtl ? 'الاسم واللقب' : 'First & Last Name'}
                       required
                     />
                     <AuthTextField
                       id="student-id"
-                      label="رقم الطالب / Matricule"
+                      label={isRtl ? 'رقم الطالب / Matricule' : 'Student ID / Matricule'}
                       icon={IdCard}
                       type="text"
                       name="studentId"
-                      autoComplete="off"
-                      inputMode="text"
+                      value={studentId}
+                      onChange={(e) => setStudentId(e.target.value)}
                       direction="ltr"
-                      placeholder="مثال: 202312345"
+                      placeholder="202612345"
                       required
                     />
                     <div>
-                      <label htmlFor="department" className="mb-2 block text-xs font-bold text-[#243247]">
-                        القسم
+                      <label htmlFor="department" className="mb-1.5 block text-xs font-bold text-foreground">
+                        {isRtl ? 'القسم' : 'Department'}
                       </label>
                       <div className="relative">
                         <GraduationCap
                           size={17}
                           aria-hidden="true"
-                          className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#1565C0]"
+                          className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-link ${isRtl ? 'right-3.5' : 'left-3.5'}`}
                         />
                         <select
                           id="department"
                           name="department"
                           defaultValue="informatics"
-                          className="h-12 w-full appearance-none rounded-xl border border-[#C9D7E8] bg-[#F4F7FB] pr-11 pl-10 text-sm text-[#243247] outline-none transition focus:border-[#1565C0] focus:bg-white focus:ring-4 focus:ring-[#1565C0]/10"
+                          className={`h-11 w-full appearance-none rounded-xl border border-border bg-secondary/50 text-sm text-foreground outline-none transition focus:border-link focus:bg-card focus:ring-4 focus:ring-link/10 ${
+                            isRtl ? 'pr-11 pl-10 text-right' : 'pl-11 pr-10 text-left'
+                          }`}
                         >
-                          <option value="informatics">قسم الإعلام الآلي</option>
-                          <option value="mathematics">قسم الرياضيات</option>
-                          <option value="physics">قسم الفيزياء</option>
-                          <option value="chemistry">قسم الكيمياء</option>
-                          <option value="electronics">قسم الإلكترونيات</option>
-                          <option value="civil-engineering">قسم الهندسة المدنية</option>
+                          <option value="informatics">{isRtl ? 'قسم الإعلام الآلي' : 'Department of Computer Science'}</option>
+                          <option value="mathematics">{isRtl ? 'قسم الرياضيات' : 'Department of Mathematics'}</option>
+                          <option value="physics">{isRtl ? 'قسم الفيزياء' : 'Department of Physics'}</option>
                         </select>
                         <ChevronDown
                           size={16}
                           aria-hidden="true"
-                          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#243247]/55"
+                          className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-muted-foreground/60 ${isRtl ? 'left-3.5' : 'right-3.5'}`}
                         />
                       </div>
                     </div>
@@ -226,45 +228,50 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
 
                 <AuthTextField
                   id="university-email"
-                  label="البريد الجامعي"
+                  label={isRtl ? 'البريد الجامعي' : 'University Email'}
                   icon={Mail}
                   type="email"
                   name="email"
-                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   direction="ltr"
                   placeholder="name@usthb.dz"
                   required
                 />
 
                 <div>
-                  <label htmlFor="password" className="mb-2 block text-xs font-bold text-[#243247]">
-                    كلمة المرور
+                  <label htmlFor="password" className="mb-1.5 block text-xs font-bold text-foreground">
+                    {isRtl ? 'كلمة المرور' : 'Password'}
                   </label>
                   <div className="relative">
                     <LockKeyhole
                       size={17}
                       aria-hidden="true"
-                      className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-[#1565C0]"
+                      className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-link ${isRtl ? 'right-3.5' : 'left-3.5'}`}
                     />
                     <input
                       id="password"
                       dir="ltr"
                       type={isPasswordVisible ? 'text' : 'password'}
                       name="password"
-                      autoComplete={isRegister ? 'new-password' : 'current-password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       minLength={8}
-                      placeholder="ثمانية أحرف على الأقل"
+                      placeholder="••••••••"
                       required
-                      className="h-12 w-full rounded-xl border border-[#C9D7E8] bg-[#F4F7FB] px-11 text-left text-sm text-[#243247] outline-none transition placeholder:text-left placeholder:text-[#243247]/45 focus:border-[#1565C0] focus:bg-white focus:ring-4 focus:ring-[#1565C0]/10"
+                      className={`h-11 w-full rounded-xl border border-border bg-secondary/50 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-link focus:bg-card focus:ring-4 focus:ring-link/10 ${
+                        isRtl ? 'pr-11 pl-10 text-right' : 'pl-11 pr-10 text-left'
+                      }`}
                     />
                     <button
                       type="button"
-                      aria-label={isPasswordVisible ? 'إخفاء كلمة المرور' : 'إظهار كلمة المرور'}
-                      aria-pressed={isPasswordVisible}
-                      onClick={() => setIsPasswordVisible((visible) => !visible)}
-                      className="absolute left-2 top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-lg text-[#243247]/60 transition hover:bg-[#EAF2FF] hover:text-[#0B2D5C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1565C0]"
+                      aria-label="Toggle password visibility"
+                      onClick={() => setIsPasswordVisible((v) => !v)}
+                      className={`absolute top-1/2 flex size-9 -translate-y-1/2 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-secondary hover:text-foreground ${
+                        isRtl ? 'left-2' : 'right-2'
+                      }`}
                     >
-                      {isPasswordVisible ? <EyeOff size={17} aria-hidden="true" /> : <Eye size={17} aria-hidden="true" />}
+                      {isPasswordVisible ? <EyeOff size={16} aria-hidden="true" /> : <Eye size={16} aria-hidden="true" />}
                     </button>
                   </div>
                 </div>
@@ -272,111 +279,94 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo }) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="mt-1 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#1565C0] px-4 text-sm font-extrabold text-white shadow-sm transition hover:bg-[#0B2D5C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0] disabled:cursor-wait disabled:opacity-75"
+                  className="mt-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-link px-4 text-sm font-extrabold text-white shadow-sm transition hover:bg-deep-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-link disabled:cursor-wait disabled:opacity-75"
                 >
-                  {isSubmitting && <Loader2 size={17} className="animate-spin" aria-hidden="true" />}
-                  {isSubmitting ? 'جارٍ التحقق...' : isRegister ? 'إنشاء الحساب' : 'تسجيل الدخول'}
+                  {isSubmitting && <Loader2 size={16} className="animate-spin" aria-hidden="true" />}
+                  {isSubmitting ? (isRtl ? 'جارٍ التحقق...' : 'Verifying...') : isRegister ? (isRtl ? 'إنشاء الحساب' : 'Create Account') : (isRtl ? 'تسجيل الدخول' : 'Sign In')}
                 </button>
               </form>
 
               {status && (
-                <div role="status" className="mt-4 flex items-start gap-2.5 rounded-xl border border-[#1565C0]/20 bg-[#EAF2FF] px-3.5 py-3 text-xs leading-6 text-[#0B2D5C]">
-                  <Info size={16} className="mt-0.5 shrink-0 text-[#1565C0]" aria-hidden="true" />
+                <div role="status" className="mt-3 flex items-start gap-2 rounded-xl border border-link/20 bg-secondary px-3 py-2.5 text-xs text-deep-blue">
+                  <Info size={15} className="mt-0.5 shrink-0 text-link" aria-hidden="true" />
                   <p>{status}</p>
                 </div>
               )}
 
-              <div className="mt-4 flex flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-right">
+              <div className="mt-4 flex items-center justify-between text-xs">
                 {!isRegister ? (
                   <button
                     type="button"
                     onClick={handleForgotPassword}
-                    className="rounded-md text-xs font-bold text-[#1565C0] underline-offset-4 transition hover:text-[#0B2D5C] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1565C0]"
+                    className="font-bold text-link transition hover:underline"
                   >
-                    هل نسيت كلمة السر؟
+                    {isRtl ? 'هل نسيت كلمة السر؟' : 'Forgot Password?'}
                   </button>
                 ) : (
                   <button
                     type="button"
                     onClick={() => changeMode('login')}
-                    className="rounded-md text-xs font-bold text-[#243247]/70 transition hover:text-[#1565C0] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#1565C0]"
+                    className="font-bold text-muted-foreground transition hover:text-link"
                   >
-                    لديك حساب بالفعل؟ <span className="text-[#1565C0]">تسجيل الدخول</span>
+                    {isRtl ? 'لديك حساب بالفعل؟' : 'Already have an account?'} <span className="text-link">{isRtl ? 'تسجيل الدخول' : 'Sign In'}</span>
                   </button>
                 )}
-                <p className="inline-flex items-center gap-1.5 text-[10px] leading-5 text-[#243247]/55">
-                  <Info size={13} aria-hidden="true" />
-                  بوابة مصادقة آمنة لطلاب جامعة USTHB.
-                </p>
               </div>
 
               <button
                 type="button"
                 onClick={onOpenDemo}
-                className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#C9D7E8] bg-white px-4 text-sm font-bold text-[#0B2D5C] transition hover:border-[#1565C0]/50 hover:bg-[#EAF2FF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1565C0]"
+                className="mt-4 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 text-xs font-bold text-deep-blue transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-link"
               >
-                <BookOpen size={17} aria-hidden="true" />
-                استكشاف المنصة كزائر
+                <BookOpen size={16} aria-hidden="true" />
+                {isRtl ? 'استكشاف المنصة كزائر' : 'Explore Platform as Visitor'}
               </button>
             </div>
           </div>
 
-          <aside className="relative hidden flex-col justify-between overflow-hidden bg-[#0B2D5C] p-10 text-white lg:flex xl:p-12">
-            <div aria-hidden="true" className="pointer-events-none absolute -left-24 -top-24 size-80 rounded-full bg-[#1565C0]/35 blur-[80px]" />
-            <div aria-hidden="true" className="pointer-events-none absolute -bottom-36 -right-24 size-96 rounded-full border-[50px] border-white/[0.05]" />
+          {/* الجانب الأيسر: الشعار والترحيب الأكاديمي */}
+          <aside className="relative hidden flex-col justify-between bg-deep-blue p-8 text-white lg:flex">
+            <div aria-hidden="true" className="pointer-events-none absolute -left-20 -top-20 size-64 rounded-full bg-link/30 blur-[70px]" />
 
             <div className="relative z-10 flex items-center gap-3">
-              <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-white p-1.5 shadow-sm">
+              <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-white p-1.5 shadow-sm">
                 <img
                   src="/usthb-logo.png"
-                  alt="شعار جامعة العلوم والتكنولوجيا هواري بومدين"
-                  width="100"
-                  height="99"
+                  alt="USTHB Logo"
+                  width="80"
+                  height="79"
                   className="size-full object-contain"
                 />
               </span>
               <div>
-                <p dir="ltr" className="text-base font-extrabold tracking-tight">RAG-USTHB</p>
-                <p className="mt-1 text-[11px] text-white/65">جامعة العلوم والتكنولوجيا هواري بومدين</p>
+                <p dir="ltr" className="text-sm font-extrabold tracking-tight">RAG-USTHB</p>
+                <p className="text-[10px] text-white/65">Houari Boumediene University</p>
               </div>
             </div>
 
-            <div className="relative z-10 my-12">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-1.5 text-[11px] font-bold text-white/85">
-                <GraduationCap size={15} aria-hidden="true" />
-                مساحة دراسية لطلاب الجامعة
+            <div className="relative z-10 my-8">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-1 text-[11px] font-bold text-white/85">
+                <GraduationCap size={14} aria-hidden="true" />
+                {isRtl ? 'مساحة دراسية للطلاب' : 'Smart Student Workspace'}
               </span>
-              <h2 className="mt-5 max-w-lg text-3xl font-extrabold leading-[1.55] xl:text-4xl">
-                اجعل وقت المراجعة أكثر تركيزاً ووضوحاً.
+              <h2 className="mt-4 text-2xl font-extrabold leading-snug xl:text-3xl">
+                {isRtl ? 'اجعل وقت المراجعة أكثر تركيزاً ووضوحاً.' : 'Make your study time focused & clear.'}
               </h2>
-              <p className="mt-4 max-w-md text-sm leading-7 text-white/70">
-                اكتشف محتوى المقررات، راجع المفاهيم الأساسية، وتنقّل بين إجابات مدعومة بمراجع دراسية.
+              <p className="mt-3 text-xs leading-relaxed text-white/70">
+                {isRtl ? 'اكتشف محتوى المقررات، راجع المفاهيم، واستفد من إجابات مدعومة بالمراجع.' : 'Explore course content, review concepts, and interact with citation-backed answers.'}
               </p>
             </div>
 
-            <div className="relative z-10 rounded-2xl border border-white/15 bg-white/[0.07] p-4">
-              <p className="text-xs font-extrabold text-white/90">مصادر أكاديمية في مكان واحد</p>
-              <div className="mt-4 flex flex-col gap-3">
-                <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2.5">
-                  <FileText size={16} className="shrink-0 text-white/80" aria-hidden="true" />
-                  <span className="text-xs text-white/75">محاضرات ومناهج رسمية</span>
-                </div>
-                <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-2.5">
-                  <BookOpen size={16} className="shrink-0 text-white/80" aria-hidden="true" />
-                  <span className="text-xs text-white/75">مراجعة منظمة حسب المادة</span>
-                </div>
+            <div className="relative z-10 rounded-2xl border border-white/15 bg-white/[0.07] p-3.5">
+              <div className="flex items-center gap-3">
+                <FileText size={16} className="shrink-0 text-white/80" aria-hidden="true" />
+                <span className="text-xs text-white/80">{isRtl ? 'مستندات ومحاضرات رسمية' : 'Official Lectures & Syllabi'}</span>
               </div>
             </div>
           </aside>
+
         </div>
       </section>
-
-      <footer className="relative mt-5 text-center text-[10px] leading-5 text-[#243247]/50 lg:mt-0">
-        <span className="inline-flex items-center gap-1.5">
-          <GraduationCap size={13} aria-hidden="true" />
-          تعليم جامعي، بلغة أقرب إليك
-        </span>
-      </footer>
     </main>
   )
 }
