@@ -31,55 +31,55 @@ const translations = {
       closeMenu: 'Close Menu',
     },
     hero: {
-      badge: 'USTHB Student Knowledge Platform',
+      badge: 'USTHB Computer Science Knowledge Platform',
       title1: 'Your AI-Powered Academic Assistant at',
       titleHighlight: 'USTHB',
-      description: 'Search lectures, exam archives, and official curricula through an advanced RAG experience, delivering precise academic answers.',
+      description: 'Search official timetables, exam schedules, deliberation PVs, and course canevas through an advanced RAG experience with verified source attribution.',
       getStarted: 'Get Started Now',
       explore: 'Explore Features',
-      documents: ['Official Lectures', 'Exam Archives', 'Official Curricula'],
+      documents: ['Official Canevas & Curricula', 'Timetables & Exam Schedules', 'Deliberation PVs & Archives'],
       previewTitle: 'Study Assistant',
-      previewSub: 'Instant academic search',
-      previewQuery: 'What is the time complexity of binary search?',
-      previewAnswerTitle: 'Trusted Academic Answer',
-      previewAnswerText: 'Binary search halves the search space at each step, resulting in a time complexity of',
-      previewRefsTitle: 'Related Courses',
-      previewRefsSub: 'Computer Science Dept',
+      previewSub: 'Instant verified academic search',
+      previewQuery: 'When is the make-up exam for ISE1 in ING1?',
+      previewAnswerTitle: 'Verified Academic Answer',
+      previewAnswerText: 'The make-up exam for ISE1 in ING1 is scheduled for June 29, 2025 at 15:30 at the Auditorium.',
+      previewRefsTitle: 'Verified Source File',
+      previewRefsSub: 'Exam_Schedule_ING1.pdf',
     },
     features: {
       tag: 'Why RAG-USTHB?',
-      title: 'Smarter Review & Easier Access to Curricula',
-      description: 'Interactive tools designed specifically to help Computer Science students organize their study journey and achieve top results.',
+      title: 'Precise Answers from Official University Documents',
+      description: 'Designed specifically for USTHB Computer Science students to instantly look up schedules, exam rooms, module coefficients, and deliberation results.',
       cards: [
         {
           number: '01',
-          title: 'Official Curriculum Coverage',
-          description: 'Computer Science courses and lectures at USTHB, from algorithms to databases and networks.',
-          detail: 'Computer Science Dept',
+          title: 'Curricula & Canevas Coverage',
+          description: 'Instant access to official module coefficients, credits, and semester programs for Computer Science and ISIL streams.',
+          detail: 'Official Study Programs',
         },
         {
           number: '02',
-          title: 'Direct & Smart Chat',
-          description: 'Ask freely about your lessons and study topics, and get clear, accurate explanations tailored for students.',
-          detail: 'Fast Academic Interaction',
+          title: 'Timetables & Exam Schedules',
+          description: 'Accurate tracking of weekly group sessions, lecture rooms, exam dates, and make-up test schedules without confusion.',
+          detail: 'Schedules & Rooms',
         },
         {
           number: '03',
-          title: 'Lectures & Exam Archives',
-          description: 'Instant and easy access to lecture content and past exam topics for effective test preparation.',
-          detail: 'Verified Academic Content',
+          title: 'PVs & Administrative Archives',
+          description: 'Query student grades, deliberation PVs, credits, and administrative forms such as reintegration requests.',
+          detail: 'Grades & Procedures',
         },
       ],
     },
     about: {
       badge: 'About Platform',
       title: 'Integrated Knowledge Platform for USTHB Students',
-      description: 'RAG-USTHB combines AI with official course content, ensuring a clear and distraction-free study experience.',
+      description: 'RAG-USTHB bridges artificial intelligence with official university files—including timetables, exam calendars, deliberation PVs, and course canevas—to deliver reliable, source-backed academic support.',
       cta: 'Explore Platform Now',
       steps: [
-        { step: '01', title: 'Select Subject', text: 'Choose your study courses.' },
-        { step: '02', title: 'Ask Your Question', text: 'Inquire in English or Arabic.' },
-        { step: '03', title: 'Get the Answer', text: 'Review accurate answers.' },
+        { step: '01', title: 'Select Document', text: 'Choose from schedules, PVs, or canevas.' },
+        { step: '02', title: 'Ask Your Question', text: 'Inquire about dates, rooms, or grades.' },
+        { step: '03', title: 'Verify Sources', text: 'Get precise answers backed by official files.' },
       ],
     },
     links: {
@@ -122,55 +122,55 @@ const translations = {
       closeMenu: 'إغلاق القائمة',
     },
     hero: {
-      badge: 'منصة المعرفة لطلاب USTHB',
+      badge: 'منصة المعرفة لطلاب إعلام آلي USTHB',
       title1: 'مساعدك الأكاديمي الذكي المدعوم بالذكاء الاصطناعي في',
       titleHighlight: 'USTHB',
-      description: 'ابحث في المحاضرات، أرشيف الامتحانات والمناهج الرسمية عبر تجربة ذكية للاسترجاع المعزز بالتوليد، لإجابات دقيقة ومباشرة.',
+      description: 'ابحث في جداول التوقيت، روزنامة الامتحانات، محاضر المداولات، وحقائب المقررات الرسمية عبر تجربة متقدمة مدعومة بالمصادر الموثوقة.',
       getStarted: 'ابدأ الآن',
       explore: 'استكشف المزايا',
-      documents: ['المحاضرات الرسمية', 'أرشيف الامتحانات', 'المناهج والمقررات'],
+      documents: ['حقائب المقررات والمناهج (Canevas)', 'جداول التوقيت والامتحانات', 'محاضر المداولات والأرشيف'],
       previewTitle: 'مساعد المواد الدراسية',
-      previewSub: 'استفسار أكاديمي فوري',
-      previewQuery: 'ما هو التعقيد الزمني لخوارزمية البحث الثنائي؟',
-      previewAnswerTitle: 'إجابة أكاديمية موثوقة',
-      previewAnswerText: 'يعمل البحث الثنائي على تقليص مجال البحث إلى النصف في كل خطوة، لذلك يكون تعقيده الزمني',
-      previewRefsTitle: 'المقررات المرتبطة',
-      previewRefsSub: 'قسم الإعلام الآلي',
+      previewSub: 'استفسار أكاديمي من الوثائق الرسمية',
+      previewQuery: 'متى امتحان الاستدراك لمقياس ISE1 في السنة الأولى إعلام آلي؟',
+      previewAnswerTitle: 'إجابة أكاديمية موثوقة من المصدر',
+      previewAnswerText: 'امتحان الاستدراك لمقياس ISE1 للسنة الأولى إعلام آلي مبرمج في 29/06/2025 على الساعة 15:30 في القاعة الكبرى (Auditorium).',
+      previewRefsTitle: 'الوثيقة المصدر',
+      previewRefsSub: 'Exam_Schedule_ING1.pdf',
     },
     features: {
       tag: 'لماذا RAG-USTHB؟',
-      title: 'مراجعة أذكى ومقررات أسهل للوصول',
-      description: 'أدوات تفاعلية صُممت خصيصاً لمساعدة طلاب كلية الإعلام الآلي في تنظيم رحلة المراجعة وتحصيل أفضل النتائج.',
+      title: 'إجابات دقيقة مستخرجة من الوثائق الجامعية الرسمية',
+      description: 'صُممت المنصة خصيصاً لمساعدة طلاب كلية الإعلام الآلي بـ USTHB على البحث السريع في الجداول، الأرصدة، القاعات، ومحاضر المداولات.',
       cards: [
         {
           number: '01',
-          title: 'تغطية شاملة للمناهج الرسمية',
-          description: 'مقررات ومحاضرات علوم الحاسوب والإعلام الآلي في USTHB، من الخوارزميات وهياكل البيانات إلى قواعد البيانات والشبكات.',
-          detail: 'مقررات قسم الإعلام الآلي',
+          title: 'تغطية المناهج وحقائب البرامج (Canevas)',
+          description: 'اطلاع فوري على معاملات المقاييس، الأرصدة (Credits)، ومحتوى البرامج الدراسية لعلوم الحاسوب وتخصصات ISIL.',
+          detail: 'المناهج والبرامج الرسمية',
         },
         {
           number: '02',
-          title: 'دردشة ذكية ومباشرة',
-          description: 'اسأل واستفسر بحرية عن دروسك ومواضيعك الدراسية، واحصل على شروحات واضحة ودقيقة مصممة خصيصاً للطلاب.',
-          detail: 'تفاعل أكاديمي سريع',
+          title: 'جداول التوقيت وتواريخ الامتحانات',
+          description: 'تتبع دقيق لحصص الأعمال التطبيقية (TP)، المحاضرات، قاعات التدريس، ومواعيد الامتحانات العادية والاستدراكية.',
+          detail: 'الأوقات والقاعات الدراسية',
         },
         {
           number: '03',
-          title: 'أرشيف المحاضرات والامتحانات',
-          description: 'وصول فوري وسهل إلى محتوى المحاضرات وامتحانات السنوات السابقة لمراجعة شاملة وفعالة قبل الامتحانات.',
-          detail: 'محتوى أكاديمي موثوق',
+          title: 'محاضر المداولات والأرشيف الإداري',
+          description: 'الاستعلام عن نقاط الطلبة، نتائج المداولات، الأرصدة المكتسبة، ونماذج طلبات الإعادة والوثائق الإدارية بكل دقة.',
+          detail: 'النقاط ومحاضر المداولات',
         },
       ],
     },
     about: {
       badge: 'عن المنصة',
       title: 'منصة معرفية متكاملة لطلاب USTHB',
-      description: 'يجمع RAG-USTHB بين قوة الذكاء الاصطناعي ومحتوى المقررات الرسمية، لتستمتع بتجربة دراسية واضحة وخالية من التشتت.',
+      description: 'تربط منصة RAG-USTHB بين تقنيات الذكاء الاصطناعي والوثائق الجامعية الرسمية (جداول التوقيت، روزنامة الامتحانات، محاضر المداولات، وحقائب المقررات) لتوفير دعم أكاديمي موثوق وخالٍ من الأخطاء.',
       cta: 'استكشف المنصة الآن',
       steps: [
-        { step: '01', title: 'اختر المادة', text: 'حدد مقرراتك الدراسية.' },
-        { step: '02', title: 'اطرح سؤالك', text: 'استفسر بالعربية أو الإنجليزية.' },
-        { step: '03', title: 'احصل على الإجابة', text: 'راجع إجابات دقيقة وموثوقة.' },
+        { step: '01', title: 'اختر الوثيقة', text: 'حدد بين الجداول، المداولات أو المناهج.' },
+        { step: '02', title: 'اطرح استفسارك', text: 'اسأل عن المواعيد، القاعات أو النقاط.' },
+        { step: '03', title: 'تحقق من المصدر', text: 'احصل على إجابة دقيقة ومدعومة بالملفات.' },
       ],
     },
     links: {
@@ -407,8 +407,7 @@ export function RagLanding({ onNavigate }) {
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-extrabold text-deep-blue">{t.hero.previewAnswerTitle}</p>
                     <p className="mt-1.5 text-xs leading-6 text-muted-foreground/75">
-                      {t.hero.previewAnswerText}{' '}
-                      <span dir="ltr" className="font-bold text-link">O(log n)</span>.
+                      {t.hero.previewAnswerText}
                     </p>
                   </div>
                 </div>
@@ -421,11 +420,11 @@ export function RagLanding({ onNavigate }) {
                   <div className="flex flex-wrap gap-2">
                     <span dir="ltr" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-2.5 py-2 text-[10px] font-semibold text-foreground">
                       <FileText size={14} className="text-link" aria-hidden="true" />
-                      Algorithms_L1
+                      Exam_Schedule_ING1.pdf
                     </span>
                     <span dir="ltr" className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-2.5 py-2 text-[10px] font-semibold text-foreground">
                       <FileText size={14} className="text-link" aria-hidden="true" />
-                      DataStructures_L2
+                      Timetable_SectionA.pdf
                     </span>
                   </div>
                 </div>
