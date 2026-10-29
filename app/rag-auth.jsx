@@ -170,7 +170,6 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
       <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -right-32 size-80 rounded-full bg-deep-blue/[0.05] blur-[80px]" />
 
       <section aria-labelledby="auth-heading" className="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
-        {/* تم تعديل شبكة العرض ليتجاوب القسم الأيسر والأيمن بمرونة على كافة الشاشات */}
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
           
           {/* Form Side */}
@@ -443,8 +442,8 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
             </div>
           </div>
 
-          {/* Left: Dark Blue Section (Aside) - ظاهر بشكل متناسق ومستجيب على الشاشات الكبيرة والصغيرة */}
-          <aside className="relative flex flex-col justify-between bg-deep-blue p-6 text-white">
+          {/* Left: Dark Blue Section (Aside) - مخفي تماماً على الهواتف ويظهر بشكل أنيق واحترافي حصراً على الشاشات الكبيرة lg فما فوق */}
+          <aside className="relative hidden lg:flex flex-col justify-between bg-deep-blue p-6 text-white">
             <div aria-hidden="true" className="pointer-events-none absolute -left-20 -top-20 size-60 rounded-full bg-link/30 blur-[60px]" />
 
             {/* 1. Header / Logo Section */}
