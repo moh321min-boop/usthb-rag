@@ -10,16 +10,15 @@ import {
   GraduationCap,
   IdCard,
   CheckCircle2,
-  AlertCircle,
+  XCircle,
   Loader2,
   LockKeyhole,
   Mail,
   UserRound,
   Globe,
-  BookOpen,
 } from 'lucide-react'
 
-function AuthTextField({ id, label, icon: Icon, direction = 'ltr', isValid, ...inputProps }) {
+function AuthTextField({ id, label, icon: Icon, direction = 'ltr', isValid, errorText, ...inputProps }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-1">
@@ -31,7 +30,7 @@ function AuthTextField({ id, label, icon: Icon, direction = 'ltr', isValid, ...i
             {isValid ? (
               <CheckCircle2 size={15} className="text-emerald-500 inline" aria-hidden="true" />
             ) : (
-              <AlertCircle size={15} className="text-amber-500 inline" aria-hidden="true" />
+              <XCircle size={15} className="text-destructive inline" aria-hidden="true" />
             )}
           </span>
         )}
@@ -46,11 +45,12 @@ function AuthTextField({ id, label, icon: Icon, direction = 'ltr', isValid, ...i
           id={id}
           dir={direction}
           {...inputProps}
-          className={`h-10 w-full rounded-xl border border-border bg-secondary/50 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-link focus:bg-card focus:ring-4 focus:ring-link/10 ${
-            direction === 'rtl' ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4 text-left'
-          }`}
+          className={`h-10 w-full rounded-xl border bg-secondary/50 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:bg-card focus:ring-4 focus:ring-link/10 ${
+            isValid === false ? 'border-destructive focus:border-destructive' : 'border-border focus:border-link'
+          } ${direction === 'rtl' ? 'pr-11 pl-4 text-right' : 'pl-11 pr-4 text-left'}`}
         />
       </div>
+      {errorText && <p className="mt-1 text-[10px] text-destructive">{errorText}</p>}
     </div>
   )
 }
@@ -62,6 +62,7 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false)
   const [status, setStatus] = useState('')
+  const [showErrors, setShowErrors] = useState(false)
 
   // Form fields state
   const [email, setEmail] = useState('')
@@ -76,11 +77,13 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
   useEffect(() => {
     setMode(initialMode === 'register' ? 'register' : 'login')
     setStatus('')
+    setShowErrors(false)
   }, [initialMode])
 
   function changeMode(nextMode) {
     setMode(nextMode)
     setStatus('')
+    setShowErrors(false)
     setIsPasswordVisible(false)
     setIsConfirmPasswordVisible(false)
   }
@@ -89,26 +92,42 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
     setLang((prev) => (prev === 'en' ? 'ar' : 'en'))
   }
 
-  // Password validation rules
+  // Validations
   const hasMinLength = password.length >= 8
   const hasUpperCase = /[A-Z]/.test(password)
   const hasNumber = /[0-9]/.test(password)
   const hasSpecialChar = /[^A-Za-z0-9]/.test(password)
+  const isPasswordValid = hasMinLength && hasUpperCase && hasNumber && hasSpecialChar
 
   const isEmailValid = email.includes('@') && email.includes('.')
   const isNameValid = name.trim().length > 2
-  const isStudentIdValid = studentId.trim().length >= 5
+  const isStudentIdValid = /^\d{8}$/.test(studentId) // بالضبط 8 أرقام للباك / رقم الطالب
+  const passwordsMatch = password === confirmPassword && confirmPassword !== ''
 
   function handleSubmit(event) {
     event.preventDefault()
+    setShowErrors(true)
     if (isSubmitting) return
 
+    if (!isEmailValid) {
+      setStatus(isRtl ? 'يرجى كتابة البريد الجامعي بشكل صحيح.' : 'Please enter a valid university email.')
+      return
+    }
+
     if (isRegister) {
-      if (!hasMinLength || !hasUpperCase || !hasNumber || !hasSpecialChar) {
+      if (!isNameValid) {
+        setStatus(isRtl ? 'يرجى إدخال الاسم الكامل.' : 'Please enter full name.')
+        return
+      }
+      if (!isStudentIdValid) {
+        setStatus(isRtl ? 'رقم الطالب (الباك) يجب أن يتكون من 8 أرقام بالضبط.' : 'Student ID must be exactly 8 digits.')
+        return
+      }
+      if (!isPasswordValid) {
         setStatus(isRtl ? 'يرجى استيفاء جميع شروط كلمة المرور.' : 'Please meet all password requirements.')
         return
       }
-      if (password !== confirmPassword) {
+      if (!passwordsMatch) {
         setStatus(isRtl ? 'كلمتا المرور غير متطابقتين.' : 'Passwords do not match.')
         return
       }
@@ -117,18 +136,24 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
     setIsSubmitting(true)
     setStatus('')
 
-    // دالة وهمية تحسب 3 ثوان ثم ترسل أمر التوجيه إلى الشات (كما طلبت)
+    // محاكاة الاتصال بالخلفية لمدة 3 ثوانٍ ثم التوجيه للدردشة
     window.setTimeout(() => {
       setIsSubmitting(false)
       onNavigate('chat')
     }, 3000)
   }
 
-  // Judge Demo Fill for Login mode
+  // Judge Demo Fill
   function handleJudgeDemoFill() {
     setEmail('judge@usthb.dz')
     setPassword('Usthb@2026')
+    if (isRegister) {
+      setName('Judge Examiner')
+      setStudentId('20260000')
+      setConfirmPassword('Usthb@2026')
+    }
     setStatus('')
+    setShowErrors(false)
   }
 
   return (
@@ -139,7 +164,7 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
       <section aria-labelledby="auth-heading" className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
         <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
           
-          {/* Right/Left: Form Side */}
+          {/* Form Side */}
           <div className="p-5 sm:p-6 lg:p-7">
             <div className="flex items-center justify-between gap-4">
               <button
@@ -209,20 +234,26 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                       onChange={(e) => setName(e.target.value)}
                       direction={isRtl ? 'rtl' : 'ltr'}
                       placeholder={isRtl ? 'الاسم واللقب' : 'First & Last Name'}
-                      isValid={isNameValid}
+                      isValid={showErrors ? isNameValid : undefined}
+                      errorText={showErrors && !isNameValid ? (isRtl ? 'يرجى كتابة الاسم الكامل' : 'Please enter full name') : undefined}
                       required
                     />
                     <AuthTextField
                       id="student-id"
-                      label={isRtl ? 'رقم الطالب / Matricule' : 'Student ID / Matricule'}
+                      label={isRtl ? 'رقم الطالب / الباك (8 أرقام)' : 'Student ID / Matricule (8 digits)'}
                       icon={IdCard}
                       type="text"
                       name="studentId"
                       value={studentId}
-                      onChange={(e) => setStudentId(e.target.value)}
+                      maxLength={8}
+                      onChange={(e) => {
+                        const val = e.target.value.replace(/\D/g, '').slice(0, 8)
+                        setStudentId(val)
+                      }}
                       direction="ltr"
-                      placeholder="202612345"
-                      isValid={isStudentIdValid}
+                      placeholder="20261234"
+                      isValid={showErrors ? isStudentIdValid : undefined}
+                      errorText={showErrors && !isStudentIdValid ? (isRtl ? 'يجب أن يتكون رقم الباك من 8 أرقام بالضبط' : 'Must be exactly 8 digits') : undefined}
                       required
                     />
                     <div>
@@ -253,7 +284,8 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                   onChange={(e) => setEmail(e.target.value)}
                   direction="ltr"
                   placeholder="name@usthb.dz"
-                  isValid={isEmailValid}
+                  isValid={showErrors ? isEmailValid : undefined}
+                  errorText={showErrors && !isEmailValid ? (isRtl ? 'يرجى كتابة البريد الجامعي بشكل صحيح' : 'Valid university email required') : undefined}
                   required
                 />
 
@@ -277,9 +309,9 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                       minLength={8}
                       placeholder="••••••••"
                       required
-                      className={`h-10 w-full rounded-xl border border-border bg-secondary/50 text-xs text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-link focus:bg-card ${
-                        isRtl ? 'pr-11 pl-9 text-right' : 'pl-11 pr-9 text-left'
-                      }`}
+                      className={`h-10 w-full rounded-xl border bg-secondary/50 text-xs text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:bg-card ${
+                        showErrors && !isPasswordValid ? 'border-destructive focus:border-destructive' : 'border-border focus:border-link'
+                      } ${isRtl ? 'pr-11 pl-9 text-right' : 'pl-11 pr-9 text-left'}`}
                     />
                     <button
                       type="button"
@@ -294,17 +326,17 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                   </div>
                   {isRegister && (
                     <div className="mt-1.5 grid grid-cols-2 gap-1 text-[10px]">
-                      <span className={hasMinLength ? 'text-emerald-600 font-semibold' : 'text-muted-foreground'}>
-                        ✓ {isRtl ? '8 أحرف على الأقل' : 'Min 8 chars'}
+                      <span className={hasMinLength ? 'text-emerald-600 font-semibold' : 'text-destructive'}>
+                        {hasMinLength ? '✓' : '✗'} {isRtl ? '8 أحرف على الأقل' : 'Min 8 chars'}
                       </span>
-                      <span className={hasUpperCase ? 'text-emerald-600 font-semibold' : 'text-muted-foreground'}>
-                        ✓ {isRtl ? 'حرف كبير (A-Z)' : 'Uppercase letter'}
+                      <span className={hasUpperCase ? 'text-emerald-600 font-semibold' : 'text-destructive'}>
+                        {hasUpperCase ? '✓' : '✗'} {isRtl ? 'حرف كبير (A-Z)' : 'Uppercase letter'}
                       </span>
-                      <span className={hasNumber ? 'text-emerald-600 font-semibold' : 'text-muted-foreground'}>
-                        ✓ {isRtl ? 'رقم (0-9)' : 'Number'}
+                      <span className={hasNumber ? 'text-emerald-600 font-semibold' : 'text-destructive'}>
+                        {hasNumber ? '✓' : '✗'} {isRtl ? 'رقم (0-9)' : 'Number'}
                       </span>
-                      <span className={hasSpecialChar ? 'text-emerald-600 font-semibold' : 'text-muted-foreground'}>
-                        ✓ {isRtl ? 'رمز خاص (!@#...)' : 'Special char'}
+                      <span className={hasSpecialChar ? 'text-emerald-600 font-semibold' : 'text-destructive'}>
+                        {hasSpecialChar ? '✓' : '✗'} {isRtl ? 'رمز خاص (!@#...)' : 'Special char'}
                       </span>
                     </div>
                   )}
@@ -330,9 +362,9 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="••••••••"
                         required
-                        className={`h-10 w-full rounded-xl border border-border bg-secondary/50 text-xs text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:border-link focus:bg-card ${
-                          isRtl ? 'pr-11 pl-9 text-right' : 'pl-11 pr-9 text-left'
-                        }`}
+                        className={`h-10 w-full rounded-xl border bg-secondary/50 text-xs text-foreground outline-none transition placeholder:text-muted-foreground/50 focus:bg-card ${
+                          showErrors && !passwordsMatch ? 'border-destructive focus:border-destructive' : 'border-border focus:border-link'
+                        } ${isRtl ? 'pr-11 pl-9 text-right' : 'pl-11 pr-9 text-left'}`}
                       />
                       <button
                         type="button"
@@ -345,6 +377,11 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                         {isConfirmPasswordVisible ? <EyeOff size={15} aria-hidden="true" /> : <Eye size={15} aria-hidden="true" />}
                       </button>
                     </div>
+                    {showErrors && !passwordsMatch && (
+                      <p className="mt-1 text-[10px] text-destructive">
+                        {isRtl ? '✗ كلمتا المرور غير متطابقتين' : '✗ Passwords do not match'}
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -354,14 +391,20 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
                   className="mt-1 inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-link px-4 text-xs font-extrabold text-white shadow-sm transition hover:bg-deep-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-link disabled:cursor-wait disabled:opacity-75"
                 >
                   {isSubmitting && <Loader2 size={15} className="animate-spin" aria-hidden="true" />}
-                  {isSubmitting ? (isRtl ? 'جارٍ التحقق والتوجيه...' : 'Verifying & Redirecting...') : isRegister ? (isRtl ? 'إنشاء الحساب' : 'Create Account') : (isRtl ? 'تسجيل الدخول' : 'Sign In')}
+                  {isSubmitting ? (isRtl ? 'جارٍ التحقق والاتصال بالخادم...' : 'Verifying & connecting...') : isRegister ? (isRtl ? 'إنشاء الحساب' : 'Create Account') : (isRtl ? 'تسجيل الدخول' : 'Sign In')}
                 </button>
               </form>
 
               {status && (
-                <div role="status" className="mt-2.5 flex items-start gap-2 rounded-xl border border-link/20 bg-secondary px-3 py-2 text-xs text-deep-blue">
-                  <AlertCircle size={15} className="mt-0.5 shrink-0 text-link" aria-hidden="true" />
+                <div role="status" className="mt-2.5 flex items-start gap-2 rounded-xl border border-destructive/20 bg-secondary px-3 py-2 text-xs text-destructive">
                   <p>{status}</p>
+                </div>
+              )}
+
+              {/* ملاحظة نسيان كلمة المرور مع الإدارة بجانب الحقل (في وضع تسجيل الدخول) */}
+              {!isRegister && (
+                <div className="mt-2 text-[11px] text-muted-foreground text-center">
+                  {isRtl ? 'هل نسيت كلمة المرور؟ يرجى مراجعة إدارة الكلية/القسم.' : 'Forgot password? Please contact faculty administration.'}
                 </div>
               )}
 
@@ -379,24 +422,24 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
             </div>
           </div>
 
-          {/* Left: Dark Blue Section (Aside) with Organized Logo & Judge Demo Button moved to lower section */}
+          {/* Left: Dark Blue Section (Aside) with Professional Logo Alignment & Bottom Judge Button */}
           <aside className="relative hidden flex-col justify-between bg-deep-blue p-6 text-white lg:flex">
             <div aria-hidden="true" className="pointer-events-none absolute -left-20 -top-20 size-60 rounded-full bg-link/30 blur-[60px]" />
 
-            {/* 1. Header / Logo Section (Top) */}
-            <div className="relative z-10 flex items-center gap-2.5">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white p-1 shadow-sm">
+            {/* 1. Header / Logo Section (Aligned professionally) */}
+            <div className="relative z-10 flex items-center gap-3">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-white p-1.5 shadow-sm">
                 <img
                   src="/usthb-logo.png"
                   alt="USTHB Logo"
-                  width="60"
-                  height="59"
+                  width="70"
+                  height="69"
                   className="size-full object-contain"
                 />
               </span>
-              <div>
-                <p dir="ltr" className="text-xs font-extrabold tracking-tight">RAG-USTHB</p>
-                <p className="text-[9px] text-white/65">Houari Boumediene University</p>
+              <div className="flex flex-col">
+                <p dir="ltr" className="text-sm font-extrabold tracking-tight text-white">RAG-USTHB</p>
+                <p className="text-[10px] text-white/70">Houari Boumediene University</p>
               </div>
             </div>
 
@@ -414,17 +457,17 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
               </p>
             </div>
 
-            {/* 3. Lower Section (Where the Judge Button is placed now as requested) */}
+            {/* 3. Lower Section (Judge Demo Account Button placed precisely at the bottom as requested) */}
             <div className="relative z-10 flex flex-col gap-3">
               {!isRegister && (
                 <button
                   type="button"
                   onClick={handleJudgeDemoFill}
                   className="inline-flex min-h-9 w-full items-center justify-center gap-1.5 rounded-xl border border-white/30 bg-white/10 px-3 text-xs font-bold text-white transition hover:bg-white hover:text-deep-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-white shadow-sm"
-                  title="Fill judge demo credentials"
+                  title="Fill demo account for judges"
                 >
                   <GraduationCap size={16} aria-hidden="true" />
-                  <span>{isRtl ? 'تعبئة بيانات الحكام' : 'Judge Demo Fill'}</span>
+                  <span>{isRtl ? 'حساب تجريبي (للحكام)' : 'Judge Demo Account'}</span>
                 </button>
               )}
 
