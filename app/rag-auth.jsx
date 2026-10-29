@@ -169,8 +169,9 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
       <div aria-hidden="true" className="pointer-events-none absolute -left-32 -top-32 size-80 rounded-full bg-link/[0.05] blur-[80px]" />
       <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 -right-32 size-80 rounded-full bg-deep-blue/[0.05] blur-[80px]" />
 
-      <section aria-labelledby="auth-heading" className="relative w-full max-w-3xl overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
-        <div className="grid lg:grid-cols-[1.1fr_0.9fr]">
+      <section aria-labelledby="auth-heading" className="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-lg">
+        {/* تم تعديل شبكة العرض ليتجاوب القسم الأيسر والأيمن بمرونة على كافة الشاشات */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
           
           {/* Form Side */}
           <div className="p-5 sm:p-6 lg:p-7">
@@ -442,8 +443,8 @@ export function RagAuth({ initialMode = 'login', onNavigate, onOpenDemo, initial
             </div>
           </div>
 
-          {/* Left: Dark Blue Section (Aside) - Hidden on small screens, perfectly aligned on lg+ */}
-          <aside className="relative hidden lg:flex flex-col justify-between bg-deep-blue p-6 text-white">
+          {/* Left: Dark Blue Section (Aside) - ظاهر بشكل متناسق ومستجيب على الشاشات الكبيرة والصغيرة */}
+          <aside className="relative flex flex-col justify-between bg-deep-blue p-6 text-white">
             <div aria-hidden="true" className="pointer-events-none absolute -left-20 -top-20 size-60 rounded-full bg-link/30 blur-[60px]" />
 
             {/* 1. Header / Logo Section */}
